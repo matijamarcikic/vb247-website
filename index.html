@@ -451,42 +451,50 @@
       text-transform: uppercase;
     }
 
-    /* ── PHOTO MOMENT — single focused image ── */
+    /* ── PHOTO CAROUSEL ── */
     #photo {
       background: var(--navy);
-      padding: 5rem 2rem;
+      padding: 5rem 0 0;
+      overflow: hidden;
     }
-    .photo-inner {
+    .photo-text-wrap {
       max-width: 1100px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      padding: 0 2rem 3.5rem;
     }
-    .photo-text .eyebrow { color: rgba(255,255,255,0.45); }
-    .photo-text h2 {
+    .photo-text-wrap .eyebrow { color: rgba(255,255,255,0.45); }
+    .photo-text-wrap h2 {
       font-family: 'Lilita One', cursive;
       font-size: clamp(2.5rem, 5vw, 4.2rem);
-      letter-spacing: 0.04em;
-      line-height: 0.95;
+      letter-spacing: -0.01em;
+      line-height: 1.0;
       color: var(--white);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
-    .photo-text h2 .blue { color: var(--blue); }
-    .photo-text p { font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+    .photo-text-wrap h2 .blue { color: var(--blue); }
+    .photo-text-wrap p { font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 520px; }
 
-    .photo-img img {
-      width: 100%;
-      aspect-ratio: 4/3;
+    /* endless carousel */
+    .carousel-container { width: 100%; overflow: hidden; }
+    .carousel-track {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      padding: 0 1rem 2.5rem;
+      animation: carouselScroll 36s linear infinite;
+    }
+    .carousel-track:hover { animation-play-state: paused; }
+    .carousel-track img {
+      height: 280px;
+      width: auto;
+      border-radius: 16px;
       object-fit: cover;
-      border-radius: 20px;
+      flex-shrink: 0;
       display: block;
-      box-shadow: 0 32px 64px rgba(0,0,0,0.3);
     }
-
-    @media (max-width: 768px) {
-      .photo-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    @keyframes carouselScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
     /* ── PRODUCTS ── */
@@ -914,16 +922,25 @@
   </div>
 </section>
 
-<!-- ══ PHOTO MOMENT ══ -->
+<!-- ══ PHOTO CAROUSEL ══ -->
 <section id="photo">
-  <div class="photo-inner">
-    <div class="photo-text reveal">
-      <span class="eyebrow">Schau selbst</span>
-      <h2>So schaut's<br/>aus <span class="blue">drinnen.</span></h2>
-      <p>Zwei Räume, jede Menge Automaten, Neon-Lichter — und immer ein Grund, vorbeizukommen.</p>
-    </div>
-    <div class="photo-img reveal d2">
-      <img src="img/shop-neon.jpeg" alt="VB Shop von innen" loading="lazy" width="600" height="450"/>
+  <div class="photo-text-wrap reveal">
+    <span class="eyebrow">Schau selbst</span>
+    <h2>So schaut's<br/>aus <span class="blue">drinnen.</span></h2>
+    <p>Zwei Räume, jede Menge Automaten, Neon-Lichter — und immer ein Grund, vorbeizukommen.</p>
+  </div>
+  <div class="carousel-container">
+    <div class="carousel-track">
+      <img src="img/innen-getraenke-snacks.jpeg" alt="Getränke und Snack Automaten" loading="lazy"/>
+      <img src="img/innen-getraenke2-vape-kaffee.jpeg" alt="Getränke, Vape und Kaffee Automaten" loading="lazy"/>
+      <img src="img/innen-lucky10.jpeg" alt="Lucky10 Automat" loading="lazy"/>
+      <img src="img/innen-snus.jpeg" alt="Snus Automat" loading="lazy"/>
+      <img src="img/innen-vape-key.jpeg" alt="Vape und Key Automat" loading="lazy"/>
+      <img src="img/innen-getraenke-snacks.jpeg" alt="" aria-hidden="true" loading="lazy"/>
+      <img src="img/innen-getraenke2-vape-kaffee.jpeg" alt="" aria-hidden="true" loading="lazy"/>
+      <img src="img/innen-lucky10.jpeg" alt="" aria-hidden="true" loading="lazy"/>
+      <img src="img/innen-snus.jpeg" alt="" aria-hidden="true" loading="lazy"/>
+      <img src="img/innen-vape-key.jpeg" alt="" aria-hidden="true" loading="lazy"/>
     </div>
   </div>
 </section>
