@@ -524,40 +524,32 @@
     .tab-btn:hover:not(.active) { color: var(--navy); }
 
     .tab-content { display: none; }
-    .tab-content.active {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-      gap: 0.75rem;
-    }
+    .tab-content.active { display: block; }
 
-    .product-card {
-      background: var(--bg);
-      border-radius: 16px;
-      padding: 1.25rem;
+    .product-pills {
       display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      transition: transform 0.2s, box-shadow 0.2s;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
-    .product-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(11,31,140,0.08);
+    .product-pill {
+      padding: 0.45rem 1.1rem;
+      background: var(--bg);
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s;
     }
-    .product-emoji { font-size: 1.8rem; }
-    .product-name { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
-    .product-size { font-size: 0.74rem; color: var(--muted); }
-    .product-price {
-      font-family: 'Lilita One', cursive;
-      font-size: 1.25rem;
-      letter-spacing: 0.04em;
-      color: var(--navy);
-      margin-top: auto;
+    .product-pill:hover {
+      background: rgba(11,31,140,0.05);
+      border-color: rgba(11,31,140,0.2);
     }
     .products-note {
-      margin-top: 1.25rem;
+      margin-top: 1.5rem;
       font-size: 0.82rem;
       color: var(--muted);
-      text-align: center;
     }
 
     /* ── MAP ── */
@@ -942,39 +934,121 @@
 </section>
 
 <!-- ══ PRODUCTS ══ -->
-<!-- PRODUKTE — hier Preise/Namen anpassen -->
 <section id="products" class="section">
   <div class="container">
     <div class="section-header reveal">
-      <span class="eyebrow">Unsere Hits</span>
+      <span class="eyebrow">Aktuell im Shop</span>
       <h2 class="section-title">Was dich erwartet.</h2>
       <p class="section-body">Immer frisch befüllt. Sortiment kann variieren.</p>
     </div>
     <div class="reveal d1">
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('drinks')">🥤 Getränke</button>
-        <button class="tab-btn" onclick="switchTab('snacks')">🍬 Snacks</button>
+        <button class="tab-btn active" onclick="switchTab('drinks')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:0.3em"><path d="M7 4h10l1 3H6L7 4z"/><rect x="5" y="7" width="14" height="13" rx="2"/></svg>Getränke</button>
+        <button class="tab-btn" onclick="switchTab('snacks')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:0.3em"><path d="M9 3h6l2 4v12a1 1 0 01-1 1H8a1 1 0 01-1-1V7l2-4z"/><path d="M8 7h8"/></svg>Snacks</button>
       </div>
     </div>
     <div class="tab-content active reveal d2" id="tab-drinks">
-      <div class="product-card"><span class="product-emoji">🍵</span><div class="product-name">Jana Eistee</div><div class="product-size">500 ml</div><div class="product-price">3,20 €</div></div>
-      <div class="product-card"><span class="product-emoji">🐂</span><div class="product-name">Red Bull</div><div class="product-size">250 ml</div><div class="product-price">3,20 €</div></div>
-      <div class="product-card"><span class="product-emoji">🍊</span><div class="product-name">Fanta Exotic</div><div class="product-size">330 ml</div><div class="product-price">2,50 €</div></div>
-      <div class="product-card"><span class="product-emoji">🌿</span><div class="product-name">OKF Aloe Vera</div><div class="product-size">500 ml</div><div class="product-price">3,00 €</div></div>
-      <div class="product-card"><span class="product-emoji">⚡</span><div class="product-name">Powerade</div><div class="product-size">500 ml</div><div class="product-price">2,80 €</div></div>
-      <div class="product-card"><span class="product-emoji">💚</span><div class="product-name">Gönrgy Energy</div><div class="product-size">500 ml</div><div class="product-price">2,80 €</div></div>
+      <div class="product-pills">
+        <span class="product-pill">Pepsi</span>
+        <span class="product-pill">Coca Cola</span>
+        <span class="product-pill">Coca Cola Zero</span>
+        <span class="product-pill">Sprite</span>
+        <span class="product-pill">Sprite Zero</span>
+        <span class="product-pill">Fanta Exotic</span>
+        <span class="product-pill">Fanta Grape</span>
+        <span class="product-pill">Fanta Berry</span>
+        <span class="product-pill">Fanta Peach</span>
+        <span class="product-pill">Fanta Strawberry Kiwi</span>
+        <span class="product-pill">Fanta Lemon</span>
+        <span class="product-pill">Fanta Mango</span>
+        <span class="product-pill">Pepsi Strawberries n Cream</span>
+        <span class="product-pill">Pepsi Cream Soda</span>
+        <span class="product-pill">Red Bull</span>
+        <span class="product-pill">Red Bull Zero</span>
+        <span class="product-pill">Red Bull Sea Blue Edition</span>
+        <span class="product-pill">Red Bull Green Edition</span>
+        <span class="product-pill">Red Bull Sudachi Lime</span>
+        <span class="product-pill">Red Bull Gletschereis</span>
+        <span class="product-pill">Monster</span>
+        <span class="product-pill">Powerade Mountain Blast</span>
+        <span class="product-pill">Jana Eistee Pfirsich</span>
+        <span class="product-pill">Jana Eistee Waldfrucht</span>
+        <span class="product-pill">Aloe King</span>
+        <span class="product-pill">Mogu Mogu</span>
+        <span class="product-pill">Cappy Multivitamin</span>
+        <span class="product-pill">Paulaner Limo</span>
+        <span class="product-pill">Römerquelle Prickelnd</span>
+        <span class="product-pill">Römerquelle Emotion</span>
+        <span class="product-pill">Soda Zitron</span>
+      </div>
     </div>
     <div class="tab-content" id="tab-snacks">
-      <div class="product-card"><span class="product-emoji">🌶️</span><div class="product-name">Buldak Carbonara</div><div class="product-size">130 g</div><div class="product-price">4,00 €</div></div>
-      <div class="product-card"><span class="product-emoji">🌀</span><div class="product-name">Takis Blue Heat</div><div class="product-size">Rolled Tortilla</div><div class="product-price">4,20 €</div></div>
-      <div class="product-card"><span class="product-emoji">🐉</span><div class="product-name">Hitschies Drachenzungen</div><div class="product-size">Blau</div><div class="product-price">2,40 €</div></div>
-      <div class="product-card"><span class="product-emoji">✨</span><div class="product-name">Hitschies Brizzl Bälle</div><div class="product-size">Prickelnd</div><div class="product-price">3,80 €</div></div>
-      <div class="product-card"><span class="product-emoji">🌮</span><div class="product-name">PIPAPO Taco</div><div class="product-size">100 g</div><div class="product-price">2,40 €</div></div>
-      <div class="product-card"><span class="product-emoji">🍫</span><div class="product-name">Dubai Schokolade</div><div class="product-size">Pistazie & Kadaif</div><div class="product-price">2,00 €</div></div>
-      <div class="product-card"><span class="product-emoji">🐻</span><div class="product-name">Haribo</div><div class="product-size">Goldbären</div><div class="product-price">1,40 €</div></div>
-      <div class="product-card"><span class="product-emoji">🍫</span><div class="product-name">Kinder Bueno</div><div class="product-size">Classic</div><div class="product-price">1,80 €</div></div>
+      <div class="product-pills">
+        <span class="product-pill">Buldak Carbonara</span>
+        <span class="product-pill">Buldak Cheese</span>
+        <span class="product-pill">Buldak Carbonara Cup</span>
+        <span class="product-pill">Takis Blue Heat</span>
+        <span class="product-pill">Takis Fuego</span>
+        <span class="product-pill">Takis Intense Nacho</span>
+        <span class="product-pill">Takis Buckin Ranch</span>
+        <span class="product-pill">Elit Dubai Schokolade</span>
+        <span class="product-pill">Miskets Mini Dubai Cones</span>
+        <span class="product-pill">Hitschies brizzl Bälle</span>
+        <span class="product-pill">Hitschies Saure Spinnenbeine</span>
+        <span class="product-pill">Hitschies Saure Krakenarme</span>
+        <span class="product-pill">Hitschies Schnüre</span>
+        <span class="product-pill">Haribo Goldbären</span>
+        <span class="product-pill">Haribo Happy Cola</span>
+        <span class="product-pill">Haribo Sghetti Red</span>
+        <span class="product-pill">Skittles Giants Gooey</span>
+        <span class="product-pill">Nerds Rope</span>
+        <span class="product-pill">Nerds Gummy Cluster</span>
+        <span class="product-pill">Sour Patch Jelibon Tropical</span>
+        <span class="product-pill">Sour Starburst Gummies</span>
+        <span class="product-pill">American Jelly Fruits</span>
+        <span class="product-pill">Peelerz Gummy Banana</span>
+        <span class="product-pill">Kinder Bueno</span>
+        <span class="product-pill">Kinder Bueno White</span>
+        <span class="product-pill">Kinder Schokobons Crispy</span>
+        <span class="product-pill">Kinder Creamy Milky&Crunchy</span>
+        <span class="product-pill">Kinder Riegel</span>
+        <span class="product-pill">Mars</span>
+        <span class="product-pill">Mars Croissant</span>
+        <span class="product-pill">Hanuta</span>
+        <span class="product-pill">Duplo</span>
+        <span class="product-pill">Knoppers</span>
+        <span class="product-pill">Milka Nussini</span>
+        <span class="product-pill">Happy Hippo Cacao</span>
+        <span class="product-pill">Balisto Beere lila</span>
+        <span class="product-pill">Kitkat</span>
+        <span class="product-pill">Hersheys Cookies Cream</span>
+        <span class="product-pill">Oreo Wafer Roll</span>
+        <span class="product-pill">Flipz</span>
+        <span class="product-pill">Pipapo Knax</span>
+        <span class="product-pill">Pipapo Golden Herbst</span>
+        <span class="product-pill">Candy Pop Popcorn</span>
+        <span class="product-pill">Candy Pop Snickers</span>
+        <span class="product-pill">Chaos Candy Freezes</span>
+        <span class="product-pill">Chaos Cluster</span>
+        <span class="product-pill">Center Shock Sauer Mix</span>
+        <span class="product-pill">Nik L Nip</span>
+        <span class="product-pill">Flying Saucers</span>
+        <span class="product-pill">Schwedenbomben</span>
+        <span class="product-pill">Snow Balls</span>
+        <span class="product-pill">Twinkies</span>
+        <span class="product-pill">Bugles Paprika Style</span>
+        <span class="product-pill">Lorenz Crunchchips</span>
+        <span class="product-pill">Robs Chips</span>
+        <span class="product-pill">Bifi Roll</span>
+        <span class="product-pill">Bifi Roll Hot</span>
+        <span class="product-pill">Crispy Cluck</span>
+        <span class="product-pill">Tabby Chicken Wings Schokolade</span>
+        <span class="product-pill">Bonjuks Mini Waffel</span>
+        <span class="product-pill">Capri Sun</span>
+        <span class="product-pill">Orbit</span>
+      </div>
     </div>
-    <p class="products-note reveal d3">Sortiment kann variieren · Immer frisch befüllt · Alle Preise inkl. MwSt.</p>
+    <p class="products-note reveal d3">Sortiment kann variieren · Immer frisch befüllt.</p>
   </div>
 </section>
 
