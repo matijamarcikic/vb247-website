@@ -112,14 +112,16 @@
     /* ── HERO ── */
     #hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 400px;
+      display: flex;
       align-items: center;
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 100px 2rem 4rem;
+      padding: 110px 2rem 5rem;
       position: relative;
+    }
+    .hero-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     /* soft background blobs */
@@ -134,9 +136,26 @@
       z-index: 0;
     }
 
-    .hero-left {
-      position: relative;
-      z-index: 1;
+    /* machine pills */
+    .hero-machines {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.25rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.45s forwards;
+    }
+    .machine-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.2rem;
+      background: var(--white);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      box-shadow: 0 2px 14px rgba(11,31,140,0.09);
     }
 
     .hero-tag {
@@ -263,70 +282,6 @@
     }
     .trust-sep { width: 1px; height: 36px; background: var(--border); }
 
-    /* Hero badge card */
-    .hero-right {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.3s forwards;
-    }
-    .hero-card {
-      background: var(--navy);
-      border-radius: 28px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-      box-shadow: 0 24px 64px rgba(11,31,140,0.2);
-      width: 100%;
-      max-width: 320px;
-    }
-    .hero-card-pill {
-      display: inline-block;
-      padding: 0.35rem 1rem;
-      background: rgba(75,188,255,0.18);
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 1.25rem;
-    }
-    .hero-card-number {
-      font-family: 'Lilita One', cursive;
-      font-size: 6.5rem;
-      color: var(--white);
-      line-height: 0.85;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.25rem;
-    }
-    .hero-card-sub {
-      font-family: 'Lilita One', cursive;
-      font-size: 1.4rem;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 0.02em;
-      margin-bottom: 2rem;
-    }
-    .hero-card-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-    }
-    .hero-card-item {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      padding: 0.6rem 1rem;
-      background: rgba(255,255,255,0.07);
-      border-radius: 12px;
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.65);
-      text-align: left;
-    }
-    .hero-card-item .ci { font-size: 1.1rem; flex-shrink: 0; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -337,12 +292,9 @@
       to   { opacity: 1; }
     }
 
-    @media (max-width: 860px) {
-      #hero { grid-template-columns: 1fr; padding-top: 90px; }
-      .hero-right { order: -1; }
-      .hero-card { max-width: 280px; padding: 2rem 1.5rem; }
-      .hero-card-number { font-size: 5rem; }
-      .hero-headline { font-size: clamp(3.2rem, 11vw, 5.5rem); }
+    @media (max-width: 640px) {
+      #hero { padding: 90px 1.25rem 4rem; }
+      .hero-headline { font-size: clamp(3.2rem, 13vw, 5rem); }
     }
 
     /* ── TICKER ── */
@@ -829,7 +781,7 @@
 
 <!-- ══ HERO ══ -->
 <section id="hero">
-  <div class="hero-left">
+  <div class="hero-inner">
     <div class="hero-tag">
       <span class="tag-dot"></span>
       Jetzt geöffnet — und morgen früh auch
@@ -841,6 +793,12 @@
       Sonntag Abend. Alle Läden zu. <strong>Wir nicht.</strong><br/>
       Neben der Hauptschule in der Hinterstadt — 24/7, auch an Feiertagen.
     </p>
+    <div class="hero-machines">
+      <span class="machine-pill">🥤 2x Getränke</span>
+      <span class="machine-pill">🍬 2x Snacks</span>
+      <span class="machine-pill">☕ Kaffee</span>
+      <span class="machine-pill">🚬 Snus & Vape</span>
+    </div>
     <div class="hero-ctas">
       <a href="#map" class="btn-primary">Route planen →</a>
       <a href="#machines" class="btn-ghost">Was gibts? ↓</a>
@@ -859,18 +817,6 @@
       <div class="trust-item">
         <span class="trust-num">4.5★</span>
         <span class="trust-label">Google Maps</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-card">
-      <span class="hero-card-pill">Immer offen</span>
-      <div class="hero-card-number">24/7</div>
-      <div class="hero-card-sub">Kein Ruhetag.</div>
-      <div class="hero-card-list">
-        <div class="hero-card-item"><span class="ci">📍</span> Hinterstadt 18/1, Vöcklabruck</div>
-        <div class="hero-card-item"><span class="ci">⭐</span> 4,5 Sterne auf Google Maps</div>
-        <div class="hero-card-item"><span class="ci">🎵</span> Musik-Automat · Lucky10 · Kran</div>
       </div>
     </div>
   </div>
