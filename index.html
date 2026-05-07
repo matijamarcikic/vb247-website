@@ -423,6 +423,7 @@
       box-shadow: 0 2px 16px rgba(11,31,140,0.06);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       text-align: center;
+      position: relative;
     }
     .machine-card:hover {
       transform: translateY(-4px);
@@ -438,13 +439,14 @@
     }
     .machine-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
     .machine-tag {
-      display: inline-block;
-      margin-top: 0.9rem;
-      padding: 0.22rem 0.7rem;
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      padding: 0.18rem 0.55rem;
       background: rgba(229,50,45,0.1);
       color: var(--red);
       border-radius: 999px;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -532,38 +534,25 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    .brand-groups {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem 2.5rem;
-      align-items: start;
-    }
-    @media (max-width: 640px) {
-      .brand-groups { grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; }
-    }
-    .brand-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--navy);
-      opacity: 0.4;
-      margin-bottom: 0.5rem;
-    }
     .product-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .product-pills { grid-template-columns: repeat(4, 1fr); }
     }
     .product-pill {
-      padding: 0.45rem 1.1rem;
+      padding: 0.55rem 0.75rem;
       background: var(--bg);
       border-radius: 999px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--ink);
       border: 1px solid var(--border);
-      white-space: nowrap;
+      text-align: center;
+      white-space: normal;
+      line-height: 1.3;
       transition: background 0.15s, border-color 0.15s;
     }
     .product-pill:hover {
@@ -960,189 +949,104 @@
       </div>
     </div>
     <div class="tab-content active reveal d2" id="tab-drinks">
-      <div class="brand-groups">
-        <div class="brand-group">
-          <div class="brand-label">Pepsi</div>
-          <div class="product-pills">
-            <span class="product-pill">Pepsi</span>
-            <span class="product-pill">Pepsi Cream Soda</span>
-            <span class="product-pill">Pepsi Strawberries n Cream</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Coca-Cola</div>
-          <div class="product-pills">
-            <span class="product-pill">Coca Cola</span>
-            <span class="product-pill">Coca Cola Zero</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Sprite & Fanta</div>
-          <div class="product-pills">
-            <span class="product-pill">Sprite</span>
-            <span class="product-pill">Sprite Zero</span>
-            <span class="product-pill">Fanta Exotic</span>
-            <span class="product-pill">Fanta Grape</span>
-            <span class="product-pill">Fanta Berry</span>
-            <span class="product-pill">Fanta Peach</span>
-            <span class="product-pill">Fanta Strawberry Kiwi</span>
-            <span class="product-pill">Fanta Lemon</span>
-            <span class="product-pill">Fanta Mango</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Red Bull</div>
-          <div class="product-pills">
-            <span class="product-pill">Red Bull</span>
-            <span class="product-pill">Red Bull Zero</span>
-            <span class="product-pill">Sea Blue Edition</span>
-            <span class="product-pill">Green Edition</span>
-            <span class="product-pill">Sudachi Lime</span>
-            <span class="product-pill">Gletschereis</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Energy & Sport</div>
-          <div class="product-pills">
-            <span class="product-pill">Monster</span>
-            <span class="product-pill">Powerade Mountain Blast</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Eistee & Exotic</div>
-          <div class="product-pills">
-            <span class="product-pill">Jana Eistee Pfirsich</span>
-            <span class="product-pill">Jana Eistee Waldfrucht</span>
-            <span class="product-pill">Aloe King</span>
-            <span class="product-pill">Mogu Mogu</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Limo & Wasser</div>
-          <div class="product-pills">
-            <span class="product-pill">Cappy Multivitamin</span>
-            <span class="product-pill">Paulaner Limo</span>
-            <span class="product-pill">Römerquelle Prickelnd</span>
-            <span class="product-pill">Römerquelle Emotion</span>
-            <span class="product-pill">Soda Zitron</span>
-          </div>
-        </div>
+      <div class="product-pills">
+        <span class="product-pill">Pepsi</span>
+        <span class="product-pill">Pepsi Cream Soda</span>
+        <span class="product-pill">Pepsi Strawberries n Cream</span>
+        <span class="product-pill">Coca Cola</span>
+        <span class="product-pill">Coca Cola Zero</span>
+        <span class="product-pill">Sprite</span>
+        <span class="product-pill">Sprite Zero</span>
+        <span class="product-pill">Fanta Exotic</span>
+        <span class="product-pill">Fanta Grape</span>
+        <span class="product-pill">Fanta Berry</span>
+        <span class="product-pill">Fanta Peach</span>
+        <span class="product-pill">Fanta Strawberry Kiwi</span>
+        <span class="product-pill">Fanta Lemon</span>
+        <span class="product-pill">Fanta Mango</span>
+        <span class="product-pill">Red Bull</span>
+        <span class="product-pill">Red Bull Zero</span>
+        <span class="product-pill">Red Bull Sea Blue Edition</span>
+        <span class="product-pill">Red Bull Green Edition</span>
+        <span class="product-pill">Red Bull Sudachi Lime</span>
+        <span class="product-pill">Red Bull Gletschereis</span>
+        <span class="product-pill">Monster</span>
+        <span class="product-pill">Powerade Mountain Blast</span>
+        <span class="product-pill">Jana Eistee Pfirsich</span>
+        <span class="product-pill">Jana Eistee Waldfrucht</span>
+        <span class="product-pill">Aloe King</span>
+        <span class="product-pill">Mogu Mogu</span>
+        <span class="product-pill">Cappy Multivitamin</span>
+        <span class="product-pill">Paulaner Limo</span>
+        <span class="product-pill">Römerquelle Prickelnd</span>
+        <span class="product-pill">Römerquelle Emotion</span>
+        <span class="product-pill">Soda Zitron</span>
       </div>
     </div>
     <div class="tab-content" id="tab-snacks">
-      <div class="brand-groups">
-        <div class="brand-group">
-          <div class="brand-label">Buldak</div>
-          <div class="product-pills">
-            <span class="product-pill">Carbonara</span>
-            <span class="product-pill">Cheese</span>
-            <span class="product-pill">Carbonara Cup</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Takis</div>
-          <div class="product-pills">
-            <span class="product-pill">Blue Heat</span>
-            <span class="product-pill">Fuego</span>
-            <span class="product-pill">Intense Nacho</span>
-            <span class="product-pill">Buckin Ranch</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Dubai Schokolade</div>
-          <div class="product-pills">
-            <span class="product-pill">Elit Dubai Schokolade</span>
-            <span class="product-pill">Miskets Mini Dubai Cones</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Hitschies</div>
-          <div class="product-pills">
-            <span class="product-pill">brizzl Bälle</span>
-            <span class="product-pill">Saure Spinnenbeine</span>
-            <span class="product-pill">Saure Krakenarme</span>
-            <span class="product-pill">Schnüre</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Haribo</div>
-          <div class="product-pills">
-            <span class="product-pill">Goldbären</span>
-            <span class="product-pill">Happy Cola</span>
-            <span class="product-pill">Sghetti Red</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">American Candy</div>
-          <div class="product-pills">
-            <span class="product-pill">Skittles Giants Gooey</span>
-            <span class="product-pill">Nerds Rope</span>
-            <span class="product-pill">Nerds Gummy Cluster</span>
-            <span class="product-pill">Sour Patch Tropical</span>
-            <span class="product-pill">Sour Starburst Gummies</span>
-            <span class="product-pill">American Jelly Fruits</span>
-            <span class="product-pill">Peelerz Gummy Banana</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Kinder</div>
-          <div class="product-pills">
-            <span class="product-pill">Bueno</span>
-            <span class="product-pill">Bueno White</span>
-            <span class="product-pill">Schokobons Crispy</span>
-            <span class="product-pill">Creamy Milky&Crunchy</span>
-            <span class="product-pill">Riegel</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Riegel & Schoko</div>
-          <div class="product-pills">
-            <span class="product-pill">Mars</span>
-            <span class="product-pill">Mars Croissant</span>
-            <span class="product-pill">Hanuta</span>
-            <span class="product-pill">Duplo</span>
-            <span class="product-pill">Knoppers</span>
-            <span class="product-pill">Milka Nussini</span>
-            <span class="product-pill">Happy Hippo Cacao</span>
-            <span class="product-pill">Balisto Beere lila</span>
-            <span class="product-pill">Kitkat</span>
-            <span class="product-pill">Hersheys Cookies Cream</span>
-            <span class="product-pill">Oreo Wafer Roll</span>
-            <span class="product-pill">Flipz</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Chips & Salty</div>
-          <div class="product-pills">
-            <span class="product-pill">Bugles Paprika Style</span>
-            <span class="product-pill">Lorenz Crunchchips</span>
-            <span class="product-pill">Robs Chips</span>
-            <span class="product-pill">Pipapo Knax</span>
-            <span class="product-pill">Pipapo Golden Herbst</span>
-            <span class="product-pill">Candy Pop Popcorn</span>
-            <span class="product-pill">Candy Pop Snickers</span>
-          </div>
-        </div>
-        <div class="brand-group">
-          <div class="brand-label">Sonstiges</div>
-          <div class="product-pills">
-            <span class="product-pill">Chaos Candy Freezes</span>
-            <span class="product-pill">Chaos Cluster</span>
-            <span class="product-pill">Center Shock Sauer Mix</span>
-            <span class="product-pill">Nik L Nip</span>
-            <span class="product-pill">Flying Saucers</span>
-            <span class="product-pill">Schwedenbomben</span>
-            <span class="product-pill">Snow Balls</span>
-            <span class="product-pill">Twinkies</span>
-            <span class="product-pill">Bifi Roll</span>
-            <span class="product-pill">Bifi Roll Hot</span>
-            <span class="product-pill">Crispy Cluck</span>
-            <span class="product-pill">Tabby Chicken Wings Schoko</span>
-            <span class="product-pill">Bonjuks Mini Waffel</span>
-            <span class="product-pill">Capri Sun</span>
-            <span class="product-pill">Orbit</span>
-          </div>
-        </div>
+      <div class="product-pills">
+        <span class="product-pill">Buldak Carbonara</span>
+        <span class="product-pill">Buldak Cheese</span>
+        <span class="product-pill">Buldak Carbonara Cup</span>
+        <span class="product-pill">Takis Blue Heat</span>
+        <span class="product-pill">Takis Fuego</span>
+        <span class="product-pill">Takis Intense Nacho</span>
+        <span class="product-pill">Takis Buckin Ranch</span>
+        <span class="product-pill">Elit Dubai Schokolade</span>
+        <span class="product-pill">Miskets Mini Dubai Cones</span>
+        <span class="product-pill">Hitschies brizzl Bälle</span>
+        <span class="product-pill">Hitschies Saure Spinnenbeine</span>
+        <span class="product-pill">Hitschies Saure Krakenarme</span>
+        <span class="product-pill">Hitschies Schnüre</span>
+        <span class="product-pill">Haribo Goldbären</span>
+        <span class="product-pill">Haribo Happy Cola</span>
+        <span class="product-pill">Haribo Sghetti Red</span>
+        <span class="product-pill">Skittles Giants Gooey</span>
+        <span class="product-pill">Nerds Rope</span>
+        <span class="product-pill">Nerds Gummy Cluster</span>
+        <span class="product-pill">Sour Patch Jelibon Tropical</span>
+        <span class="product-pill">Sour Starburst Gummies</span>
+        <span class="product-pill">American Jelly Fruits</span>
+        <span class="product-pill">Peelerz Gummy Banana</span>
+        <span class="product-pill">Kinder Bueno</span>
+        <span class="product-pill">Kinder Bueno White</span>
+        <span class="product-pill">Kinder Schokobons Crispy</span>
+        <span class="product-pill">Kinder Creamy Milky&Crunchy</span>
+        <span class="product-pill">Kinder Riegel</span>
+        <span class="product-pill">Mars</span>
+        <span class="product-pill">Mars Croissant</span>
+        <span class="product-pill">Hanuta</span>
+        <span class="product-pill">Duplo</span>
+        <span class="product-pill">Knoppers</span>
+        <span class="product-pill">Milka Nussini</span>
+        <span class="product-pill">Happy Hippo Cacao</span>
+        <span class="product-pill">Balisto Beere lila</span>
+        <span class="product-pill">Kitkat</span>
+        <span class="product-pill">Hersheys Cookies Cream</span>
+        <span class="product-pill">Oreo Wafer Roll</span>
+        <span class="product-pill">Flipz</span>
+        <span class="product-pill">Bugles Paprika Style</span>
+        <span class="product-pill">Lorenz Crunchchips</span>
+        <span class="product-pill">Robs Chips</span>
+        <span class="product-pill">Pipapo Knax</span>
+        <span class="product-pill">Pipapo Golden Herbst</span>
+        <span class="product-pill">Candy Pop Popcorn</span>
+        <span class="product-pill">Candy Pop Snickers</span>
+        <span class="product-pill">Chaos Candy Freezes</span>
+        <span class="product-pill">Chaos Cluster</span>
+        <span class="product-pill">Center Shock Sauer Mix</span>
+        <span class="product-pill">Nik L Nip</span>
+        <span class="product-pill">Flying Saucers</span>
+        <span class="product-pill">Schwedenbomben</span>
+        <span class="product-pill">Snow Balls</span>
+        <span class="product-pill">Twinkies</span>
+        <span class="product-pill">Bifi Roll</span>
+        <span class="product-pill">Bifi Roll Hot</span>
+        <span class="product-pill">Crispy Cluck</span>
+        <span class="product-pill">Tabby Chicken Wings Schokolade</span>
+        <span class="product-pill">Bonjuks Mini Waffel</span>
+        <span class="product-pill">Capri Sun</span>
+        <span class="product-pill">Orbit</span>
       </div>
     </div>
     <p class="products-note reveal d3">Sortiment kann variieren · Immer frisch befüllt.</p>
