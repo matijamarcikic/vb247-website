@@ -546,6 +546,16 @@
       background: rgba(11,31,140,0.05);
       border-color: rgba(11,31,140,0.2);
     }
+    @media (max-width: 640px) {
+      .product-pills {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .product-pill {
+        white-space: normal;
+        text-align: center;
+      }
+    }
     .products-note {
       margin-top: 1.5rem;
       font-size: 0.82rem;
