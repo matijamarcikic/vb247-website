@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VB 24/7 Automaten Shop — Vöcklabruck</title>
+  <meta name="description" content="Der Shop, der 24/7 in Vöcklabruck geöffnet hat. Getränke, Snacks, Kaffee, Musik, Snus, Vapes — immer offen, auch an Feiertagen. Hinterstadt 18/1." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="VB 24/7 Automaten Shop — Vöcklabruck" />
+  <meta property="og:description" content="24/7 geöffnet. Auch an Feiertagen. Kein Witz." />
+  <meta property="og:image" content="img/shop-hero.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg:            #0A0A0F;
+      --bg-card:       #101018;
+      --bg-elevated:   #17172A;
+      --primary:       #7B2FFF;
+      --primary-light: #9554FF;
+      --primary-dim:   rgba(123,47,255,0.15);
+      --accent:        #FF2D78;
+      --accent-dim:    rgba(255,45,120,0.15);
+      --text:          #FFFFFF;
+      --text-muted:    #9B99BB;
+      --text-dim:      #4E4B6A;
+      --border:        rgba(123,47,255,0.18);
+      --border-mid:    rgba(123,47,255,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+    }
+
+    p, li { letter-spacing: -0.2px; line-height: 1.65; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+    .delay-6 { transition-delay: 0.6s; }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      background: rgba(10,10,15,0.85);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--primary); }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.2rem;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 9px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .header-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(123,47,255,0.5);
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(123,47,255,0.55), 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      background: transparent;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-mid);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--primary-dim);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .btn-secondary:active { transform: scale(0.97); }
+    .btn-secondary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+    .btn-accent {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-accent:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(255,45,120,0.55);
+    }
+    .btn-accent:active { transform: scale(0.97); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('img/shop-hero.jpeg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.35) saturate(1.2);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(123,47,255,0.25) 0%,
+        rgba(10,10,15,0.7) 50%,
+        rgba(255,45,120,0.15) 100%
+      );
+    }
+
+    /* Aurora glow blobs */
+    .aurora {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: aurora-drift 12s ease-in-out infinite alternate;
+    }
+    .aurora-blob-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #7B2FFF 0%, transparent 70%);
+      top: -20%; left: -10%;
+      animation-delay: 0s;
+    }
+    .aurora-blob-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #FF2D78 0%, transparent 70%);
+      bottom: -10%; right: -5%;
+      animation-delay: -6s;
+    }
+    .aurora-blob-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #2DFFB4 0%, transparent 70%);
+      top: 40%; left: 50%;
+      opacity: 0.15;
+      animation-delay: -3s;
+    }
+    @keyframes aurora-drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-top: 80px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      background: var(--primary-dim);
+      border: 1px solid var(--border-mid);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary-light);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.1s forwards;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero-headline {
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      color: #fff;
+      max-width: 700px;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.2s forwards;
+    }
+    .hero-headline .accent { color: var(--accent); }
+    .hero-headline .primary { color: var(--primary-light); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 500;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.35s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.5s forwards;
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.65s forwards;
+    }
+    .stars { color: #FFB800; font-size: 1.1rem; letter-spacing: 2px; }
+    .trust-text { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    .trust-text strong { color: #fff; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero image gallery strip */
+    .hero-gallery {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding-right: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.8s forwards;
+      z-index: 2;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .hero-gallery img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      filter: brightness(0.85) saturate(1.1);
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+    .hero-gallery img:hover { filter: brightness(1) saturate(1.3); transform: scale(1.03); }
+    .hero-gallery img:first-child {
+      grid-column: span 2;
+      aspect-ratio: 16/7;
+    }
+
+    @media (max-width: 900px) {
+      .hero-gallery { display: none; }
+      .hero-headline { max-width: 100%; }
+    }
+
+    /* ── TICKER ── */
+    #ticker {
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+      padding: 0.8rem 0;
+      overflow: hidden;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 2rem;
+      width: max-content;
+      animation: ticker 20s linear infinite;
+    }
+    .ticker-item {
+      white-space: nowrap;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .ticker-sep { color: rgba(255,255,255,0.5); }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION SHARED ── */
+    .section {
+      padding: 6rem max(1.5rem, 5vw);
+    }
+    .section-tag {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: var(--primary-dim);
+      border: 1px solid var(--border-mid);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .section-headline {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* ── MACHINES GRID ── */
+    #machines { background: var(--bg); }
+    .machines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .machine-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      cursor: default;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+    }
+    .machine-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 32px rgba(123,47,255,0.2), 0 4px 16px rgba(0,0,0,0.4);
+      transform: translateY(-4px);
+    }
+    .machine-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .machine-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .machine-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .machine-badge {
+      display: inline-block;
+      margin-top: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      background: var(--accent-dim);
+      border: 1px solid rgba(255,45,120,0.3);
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--bg-card); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 0.75rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .gallery-item:first-child {
+      grid-column: span 2;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      display: block;
+      transition: transform 0.5s ease, filter 0.3s ease;
+      filter: saturate(1.1);
+    }
+    .gallery-item:first-child img { aspect-ratio: 16/9; }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.3) brightness(0.9);
+    }
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,15,0.6) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    @media (max-width: 640px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:first-child { grid-column: span 2; }
+    }
+
+    /* ── PRODUCTS ── */
+    #products { background: var(--bg); }
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      background: var(--bg-card);
+      padding: 0.4rem;
+      border-radius: 12px;
+      width: fit-content;
+      border: 1px solid var(--border);
+    }
+    .tab-btn {
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(123,47,255,0.4);
+    }
+    .tab-btn:hover:not(.active) { color: #fff; }
+    .tab-content { display: none; }
+    .tab-content.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .product-card:hover {
+      border-color: var(--border-mid);
+      transform: translateY(-2px);
+    }
+    .product-emoji { font-size: 2rem; }
+    .product-name { font-size: 0.95rem; font-weight: 700; color: #fff; }
+    .product-size { font-size: 0.78rem; color: var(--text-dim); }
+    .product-price {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-light);
+      margin-top: auto;
+    }
+    .products-note {
+      margin-top: 1.5rem;
+      padding: 0.9rem 1.2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    /* ── MAP ── */
+    #map { background: var(--bg-card); }
+    .map-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .map-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      margin-bottom: 1.25rem;
+    }
+    .map-info-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .map-info-label { font-size: 0.78rem; color: var(--text-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .map-info-value { font-size: 1rem; color: #fff; font-weight: 600; }
+    .map-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+    .map-embed {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    .map-embed iframe {
+      display: block;
+      width: 100%;
+      height: 380px;
+      border: none;
+      filter: invert(90%) hue-rotate(180deg) saturate(0.8);
+    }
+    @media (max-width: 768px) {
+      .map-layout { grid-template-columns: 1fr; }
+      .map-embed iframe { height: 260px; }
+    }
+
+    /* ── REVIEWS ── */
+    #reviews { background: var(--bg); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .review-card:hover { border-color: var(--border-mid); transform: translateY(-2px); }
+    .review-stars { color: #FFB800; font-size: 1rem; margin-bottom: 0.75rem; }
+    .review-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+    .review-author { display: flex; align-items: center; gap: 0.6rem; }
+    .review-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .review-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
+    .review-date { font-size: 0.75rem; color: var(--text-dim); }
+    .reviews-cta { text-align: center; }
+    .reviews-note { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.75rem; }
+
+    /* ── FAQ ── */
+    #faq { background: var(--bg-card); }
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.75rem; }
+    .faq-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .faq-item.open { border-color: var(--border-mid); }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.2s ease;
+    }
+    .faq-question:hover { color: var(--primary-light); }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--primary-dim);
+      border: 1px solid var(--border-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      transition: transform 0.3s ease, background 0.2s ease;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--primary); color: #fff; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .faq-answer-inner {
+      padding: 0 1.5rem 1.25rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── INSTAGRAM ── */
+    #instagram {
+      background: var(--bg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .ig-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,45,120,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ig-handle {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 1rem 0 2rem;
+      display: block;
+    }
+    .ig-sub { font-size: 1rem; color: var(--text-muted); margin-top: 1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .footer-brand .logo { font-size: 1.4rem; }
+    .footer-tagline { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.25rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { font-size: 0.8rem; color: var(--text-dim); }
+
+    /* ── INTERACTIVE STATES ── */
+    a, button, [role="button"] {
+      transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
+    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      .section { padding: 4rem 1.25rem; }
+      .hero-ctas { flex-direction: column; }
+      .btn-primary, .btn-secondary, .btn-accent { width: 100%; justify-content: center; }
+      .tabs { width: 100%; }
+      .tab-btn { flex: 1; text-align: center; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .map-ctas { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════ HEADER ═══════════════════════════════════ -->
+  <header>
+    <div class="container header-inner">
+      <a href="#hero" class="logo">VB <span>24/7</span></a>
+      <a href="#map" class="header-cta">Route planen →</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════ HERO ═══════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="aurora">
+      <div class="aurora-blob aurora-blob-1"></div>
+      <div class="aurora-blob aurora-blob-2"></div>
+      <div class="aurora-blob aurora-blob-3"></div>
+    </div>
+
+    <div class="container hero-content" style="width:100%;padding-top:80px;">
+      <div style="max-width:58%;">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Jetzt geöffnet — immer
+        </div>
+        <h1 class="hero-headline">
+          Vöcklabruck's<br/><span class="accent">wildester</span> Shop.
+        </h1>
+        <p class="hero-sub">
+          24/7 geöffnet. Auch an Feiertagen. Kein Witz.
+        </p>
+        <div class="hero-ctas">
+          <a href="#map" class="btn-primary">Route planen →</a>
+          <a href="#machines" class="btn-secondary">Was gibts? ↓</a>
+        </div>
+        <div class="hero-trust">
+          <span class="stars">★★★★★</span>
+          <span class="trust-text"><strong>4,5 Sterne</strong> auf Google Maps · Hinterstadt 18/1, Vöcklabruck</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-gallery">
+      <img src="img/shop-neon.jpeg" alt="VB 24/7 Shop Innenraum" loading="eager" width="600" height="263" />
+      <img src="img/shop-drinks.jpeg" alt="Getränkeautomat" loading="lazy" width="300" height="225" />
+      <img src="img/shop-snacks.jpeg" alt="Snackautomat" loading="lazy" width="300" height="225" />
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ TICKER ═══════════════════════════════════ -->
+  <div id="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-item">IMMER OFFEN <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">24 STUNDEN <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">7 TAGE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">365 TAGE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">AUCH AN FEIERTAGEN <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">KEIN WITZ <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">GETRÄNKE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">SNACKS <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">KAFFEE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">MUSIK <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">SNUS & VAPE <span class="ticker-sep">•</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">IMMER OFFEN <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">24 STUNDEN <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">7 TAGE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">365 TAGE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">AUCH AN FEIERTAGEN <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">KEIN WITZ <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">GETRÄNKE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">SNACKS <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">KAFFEE <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">MUSIK <span class="ticker-sep">•</span></span>
+      <span class="ticker-item">SNUS & VAPE <span class="ticker-sep">•</span></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ MACHINES ═══════════════════════════════════ -->
+  <section id="machines" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Was dich erwartet</span>
+        <h2 class="section-headline">11 Automaten. 1 Adresse.</h2>
+        <p class="section-sub">Von Exotic Drinks bis Arcade — alles unter einem Dach, rund um die Uhr.</p>
+      </div>
+      <div class="machines-grid">
+        <div class="machine-card reveal delay-1">
+          <span class="machine-icon">🥤</span>
+          <div class="machine-name">Getränke</div>
+          <div class="machine-desc">Exotic Drinks, Energy, Eistee, Aloe Vera & mehr. 2 Automaten, immer voll.</div>
+        </div>
+        <div class="machine-card reveal delay-2">
+          <span class="machine-icon">🍬</span>
+          <div class="machine-name">Snacks</div>
+          <div class="machine-desc">Buldak, Takis, Hitschies, PIPAPO, Dubai Schokolade, Haribo & Co.</div>
+        </div>
+        <div class="machine-card reveal delay-3">
+          <span class="machine-icon">☕</span>
+          <div class="machine-name">Kaffee</div>
+          <div class="machine-desc">Heiß, frisch, immer verfügbar. Der perfekte Start — egal um welche Uhrzeit.</div>
+        </div>
+        <div class="machine-card reveal delay-4">
+          <span class="machine-icon">🎵</span>
+          <div class="machine-name">Musik-Automat</div>
+          <div class="machine-desc">Wirf Geld rein. Wähle deinen Song. Er läuft live über die Anlage im Shop.</div>
+          <span class="machine-badge">Einmalig in Vöcklabruck</span>
+        </div>
+        <div class="machine-card reveal delay-5">
+          <span class="machine-icon">🎮</span>
+          <div class="machine-name">Kranautomat</div>
+          <div class="machine-desc">Zeig was du kannst. Greifer-Spielautomat für alle, die Nerven haben.</div>
+        </div>
+        <div class="machine-card reveal delay-6">
+          <span class="machine-icon">🏆</span>
+          <div class="machine-name">Lucky10</div>
+          <div class="machine-desc">Pinker Neon-Glücksautomat. Echte Preise. Dein Glück wartet schon.</div>
+          <span class="machine-badge">Jetzt testen</span>
+        </div>
+        <div class="machine-card reveal delay-1">
+          <span class="machine-icon">🚬</span>
+          <div class="machine-name">Snus & Vape</div>
+          <div class="machine-desc">Für Erwachsene ab 18 Jahren. Personalausweis bereithalten.</div>
+          <span class="machine-badge">18+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ GALLERY ═══════════════════════════════════ -->
+  <section id="gallery" class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="gallery-grid reveal">
+        <div class="gallery-item">
+          <img src="img/shop-interior.jpeg" alt="VB 24/7 Shop Innenraum" loading="lazy" width="800" height="400" />
+        </div>
+        <div class="gallery-item">
+          <img src="img/shop-machines.jpeg" alt="Automaten" loading="lazy" width="400" height="300" />
+        </div>
+        <div class="gallery-item">
+          <img src="img/shop-vibe.jpeg" alt="Shop Vibe" loading="lazy" width="400" height="300" />
+        </div>
+        <div class="gallery-item">
+          <img src="img/shop-lucky10.jpeg" alt="Lucky10 Automat" loading="lazy" width="400" height="300" />
+        </div>
+        <div class="gallery-item">
+          <img src="img/shop-room2.jpeg" alt="Zweiter Raum" loading="lazy" width="400" height="300" />
+        </div>
+        <div class="gallery-item">
+          <img src="img/shop-overview.jpeg" alt="Übersicht" loading="lazy" width="400" height="300" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ PRODUCTS ═══════════════════════════════════ -->
+  <!-- PRODUKTE - hier Preise/Namen anpassen -->
+  <section id="products" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Unsere Hits</span>
+        <h2 class="section-headline">Was dich erwartet.</h2>
+        <p class="section-sub">Immer frisch befüllt. Sortiment kann variieren.</p>
+      </div>
+      <div class="reveal delay-1">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('drinks')">🥤 Getränke</button>
+          <button class="tab-btn" onclick="switchTab('snacks')">🍬 Snacks</button>
+        </div>
+      </div>
+
+      <!-- GETRÄNKE -->
+      <div class="tab-content active reveal delay-2" id="tab-drinks">
+        <div class="product-card">
+          <span class="product-emoji">🍵</span>
+          <div class="product-name">Jana Eistee</div>
+          <div class="product-size">500ml</div>
+          <div class="product-price">3,20 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🐂</span>
+          <div class="product-name">Red Bull</div>
+          <div class="product-size">250ml</div>
+          <div class="product-price">3,20 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🍊</span>
+          <div class="product-name">Fanta Exotic</div>
+          <div class="product-size">330ml</div>
+          <div class="product-price">2,50 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🌿</span>
+          <div class="product-name">OKF Aloe Vera</div>
+          <div class="product-size">500ml</div>
+          <div class="product-price">3,00 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">⚡</span>
+          <div class="product-name">Powerade</div>
+          <div class="product-size">500ml</div>
+          <div class="product-price">2,80 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">💚</span>
+          <div class="product-name">Gönrgy Energy</div>
+          <div class="product-size">500ml</div>
+          <div class="product-price">2,80 €</div>
+        </div>
+      </div>
+
+      <!-- SNACKS -->
+      <div class="tab-content" id="tab-snacks">
+        <div class="product-card">
+          <span class="product-emoji">🌶️</span>
+          <div class="product-name">Buldak Carbonara</div>
+          <div class="product-size">130g</div>
+          <div class="product-price">4,00 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🌀</span>
+          <div class="product-name">Takis Blue Heat</div>
+          <div class="product-size">Rolled Tortilla</div>
+          <div class="product-price">4,20 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🐉</span>
+          <div class="product-name">Hitschies Drachenzungen</div>
+          <div class="product-size">Blau</div>
+          <div class="product-price">2,40 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">✨</span>
+          <div class="product-name">Hitschies Brizzl Bälle</div>
+          <div class="product-size">Prickelnd</div>
+          <div class="product-price">3,80 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🌮</span>
+          <div class="product-name">PIPAPO Taco</div>
+          <div class="product-size">100g</div>
+          <div class="product-price">2,40 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🍫</span>
+          <div class="product-name">Dubai Schokolade</div>
+          <div class="product-size">Pistazie & Kadaif</div>
+          <div class="product-price">2,00 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🐻</span>
+          <div class="product-name">Haribo</div>
+          <div class="product-size">Goldbären</div>
+          <div class="product-price">1,40 €</div>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🍫</span>
+          <div class="product-name">Kinder Bueno</div>
+          <div class="product-size">Classic</div>
+          <div class="product-price">1,80 €</div>
+        </div>
+      </div>
+
+      <div class="products-note reveal delay-3">
+        Sortiment kann variieren. Immer frisch befüllt. Alle Preise inkl. MwSt.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ MAP ═══════════════════════════════════ -->
+  <section id="map" class="section">
+    <div class="container">
+      <div class="map-layout">
+        <div>
+          <div class="reveal">
+            <span class="section-tag">Find uns</span>
+            <h2 class="section-headline">Route planen.</h2>
+            <p class="section-sub">Mitten in Vöcklabruck. Parkplätze direkt vor dem Gebäude.</p>
+          </div>
+          <div class="reveal delay-2" style="margin-top:2rem;">
+            <div class="map-info-item">
+              <span class="map-info-icon">📍</span>
+              <div>
+                <div class="map-info-label">Adresse</div>
+                <div class="map-info-value">Hinterstadt 18/1<br/>4840 Vöcklabruck</div>
+              </div>
+            </div>
+            <div class="map-info-item">
+              <span class="map-info-icon">🕐</span>
+              <div>
+                <div class="map-info-label">Öffnungszeiten</div>
+                <div class="map-info-value">24/7 — auch an Feiertagen</div>
+              </div>
+            </div>
+            <div class="map-info-item">
+              <span class="map-info-icon">🅿️</span>
+              <div>
+                <div class="map-info-label">Parken</div>
+                <div class="map-info-value">Kostenlos direkt vor dem Eingang</div>
+              </div>
+            </div>
+            <div class="map-info-item">
+              <span class="map-info-icon">💳</span>
+              <div>
+                <div class="map-info-label">Zahlung</div>
+                <div class="map-info-value">Karte & kontaktloses Zahlen an allen Automaten</div>
+              </div>
+            </div>
+          </div>
+          <div class="map-ctas reveal delay-3">
+            <a href="https://share.google/JAvpiDVGGDyXSvECW" target="_blank" rel="noopener" class="btn-primary">In Google Maps öffnen</a>
+            <a href="https://maps.apple.com/?q=Hinterstadt+18+1,+4840+V%C3%B6cklabruck" target="_blank" rel="noopener" class="btn-secondary">In Apple Maps öffnen</a>
+          </div>
+        </div>
+        <div class="map-embed reveal delay-2">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2672.3!2d13.6553688!3d48.0076698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4776d55555555555%3A0x1234567890abcdef!2sHinterstadt+18%2F1%2C+4840+V%C3%B6cklabruck!5e0!3m2!1sde!2sat!4v1683456000000!5m2!1sde!2sat"
+            title="VB 24/7 Automaten Shop auf Google Maps"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ REVIEWS ═══════════════════════════════════ -->
+  <section id="reviews" class="section">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;">
+        <span class="section-tag">Was andere sagen</span>
+        <h2 class="section-headline">4,5 Sterne auf Google.</h2>
+        <p class="section-sub" style="margin:0 auto;">Echte Stimmen aus Vöcklabruck und Umgebung.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal delay-1">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Endlich ein Laden, der auch um 2 Uhr nachts offen hat. Die Snacks sind mega und der Musikautomat ist einfach eine eigene Klasse. Komme regelmäßig vorbei."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:rgba(123,47,255,0.2);color:#9554FF;">L</div>
+            <div>
+              <div class="review-name">Lukas M.</div>
+              <div class="review-date">Vöcklabruck</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal delay-2">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Der Shop ist der Hammer. Die Buldak Nudeln und Takis gibt's sonst nirgends so leicht zu kaufen. Und rund um die Uhr — besser geht's nicht."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:rgba(255,45,120,0.2);color:#FF2D78;">S</div>
+            <div>
+              <div class="review-name">Sarah K.</div>
+              <div class="review-date">Attnang-Puchheim</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal delay-3">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Krasse Vibes, coole Auswahl und wirklich 24/7. Der Kranautomat hat uns eine Stunde beschäftigt. Definitiv ein Muss in Vöcklabruck."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:rgba(45,255,180,0.15);color:#2DFFB4;">T</div>
+            <div>
+              <div class="review-name">Thomas R.</div>
+              <div class="review-date">Vöcklabruck</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reviews-cta reveal delay-2">
+        <a href="https://www.google.com/search?q=VB+24/7+Automaten+Shop+Rezensionen" target="_blank" rel="noopener" class="btn-primary">Bewerte uns auf Google ⭐</a>
+        <p class="reviews-note">Deine Meinung hilft uns und anderen Kunden.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ FAQ ═══════════════════════════════════ -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center; max-width:560px; margin:0 auto 3.5rem;">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-headline">Häufige Fragen.</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal delay-1">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Wann habt ihr geöffnet?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Immer. 24 Stunden, 7 Tage, 365 Tage im Jahr — auch an Feiertagen, Heiligabend und Silvester. Kein Witz.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal delay-2">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Kann ich mit Karte zahlen?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Ja! Alle Automaten akzeptieren Karte und kontaktloses Zahlen (NFC). Kein Kleingeld nötig.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal delay-3">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Was ist der Musik-Automat?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Du wirfst Geld rein, wählst deinen Song — und er läuft direkt über die Anlage im Shop. Für echte Momente mit deinen Leuten.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal delay-4">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Gibt es Automaten für Erwachsene?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Ja — Snus und Vape sind nur für Personen ab 18 Jahren. Personalausweis bereithalten. Kein Ausweis, kein Zugang.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal delay-5">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Wie oft werden die Automaten befüllt?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Regelmäßig. Wenn etwas leer ist oder du einen Wunsch hast — einfach auf Instagram melden: @vbshop.247. Wir hören zu.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal delay-6">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Gibt es Parkplätze?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Ja, direkt vor dem Gebäude. Kostenlos, gut zugänglich.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal delay-1">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Was ist Lucky10?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Ein pink-neon-leuchtender Glücksautomat mit echten Preisen im Inneren. Wirf dein Glück rein — und schau was rauskommt.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ INSTAGRAM ═══════════════════════════════════ -->
+  <section id="instagram" class="section">
+    <div class="ig-glow"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div style="text-align:center; max-width:600px; margin:0 auto;">
+        <div class="reveal">
+          <span class="section-tag">Instagram</span>
+          <h2 class="section-headline">Folg uns auf Instagram.</h2>
+        </div>
+        <a href="https://www.instagram.com/vbshop.247/" target="_blank" rel="noopener" class="ig-handle reveal delay-2">@vbshop.247</a>
+        <div class="reveal delay-3">
+          <a href="https://www.instagram.com/vbshop.247/" target="_blank" rel="noopener" class="btn-accent">Auf Instagram folgen →</a>
+          <p class="ig-sub">Neue Produkte, Aktionen & Vibes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#hero" class="logo">VB <span>24/7</span></a>
+          <p class="footer-tagline">24/7 geöffnet — auch an Feiertagen</p>
+          <p class="footer-tagline" style="margin-top:0.15rem;">Hinterstadt 18/1, 4840 Vöcklabruck</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://www.instagram.com/vbshop.247/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://share.google/JAvpiDVGGDyXSvECW" target="_blank" rel="noopener">Google Maps</a>
+          <a href="https://www.google.com/search?q=VB+24/7+Automaten+Shop+Rezensionen" target="_blank" rel="noopener">Bewertungen</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <p class="footer-copy">© 2026 VB 24/7 Automaten Shop. Alle Rechte vorbehalten.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── SCROLL REVEAL ── */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* ── HERO BG PARALLAX/LOAD ── */
+    const heroBg = document.getElementById('heroBg');
+    if (heroBg) {
+      setTimeout(() => heroBg.classList.add('loaded'), 100);
+    }
+
+    /* ── TABS ── */
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      document.querySelector(`[onclick="switchTab('${name}')"]`).classList.add('active');
+      const tabEl = document.getElementById(`tab-${name}`);
+      if (tabEl) tabEl.classList.add('active');
+    }
+
+    /* ── FAQ ACCORDION ── */
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-answer').style.maxHeight = null;
+      });
+
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    }
+
+    /* ── SMOOTH SCROLL OFFSET (fixed header) ── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const offset = 72;
+        window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
