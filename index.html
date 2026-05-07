@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
@@ -69,9 +69,9 @@
       justify-content: space-between;
     }
     .logo {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.8rem;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.01em;
       color: var(--navy);
       text-decoration: none;
       line-height: 1;
@@ -98,7 +98,7 @@
       padding: 0.55rem 1.35rem;
       background: var(--navy);
       color: var(--white);
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1rem;
       letter-spacing: 0.06em;
       text-decoration: none;
@@ -168,10 +168,10 @@
     }
 
     .hero-headline {
-      font-family: 'Bangers', sans-serif;
-      font-size: clamp(4.5rem, 8.5vw, 8rem);
-      letter-spacing: 0.04em;
-      line-height: 0.9;
+      font-family: 'Lilita One', cursive;
+      font-size: clamp(4rem, 8vw, 7.5rem);
+      letter-spacing: -0.01em;
+      line-height: 0.92;
       color: var(--navy);
       margin-bottom: 1.25rem;
       opacity: 0;
@@ -206,7 +206,7 @@
       padding: 0.85rem 1.75rem;
       background: var(--navy);
       color: var(--white);
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.1rem;
       letter-spacing: 0.05em;
       text-decoration: none;
@@ -228,7 +228,7 @@
       padding: 0.85rem 1.75rem;
       background: var(--white);
       color: var(--navy);
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.1rem;
       letter-spacing: 0.05em;
       text-decoration: none;
@@ -248,7 +248,7 @@
     }
     .trust-item { display: flex; flex-direction: column; }
     .trust-num {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.9rem;
       letter-spacing: 0.04em;
       color: var(--navy);
@@ -263,7 +263,7 @@
     }
     .trust-sep { width: 1px; height: 36px; background: var(--border); }
 
-    /* Hero mascot */
+    /* Hero badge card */
     .hero-right {
       position: relative;
       z-index: 1;
@@ -273,14 +273,60 @@
       opacity: 0;
       animation: fadeIn 0.8s ease 0.3s forwards;
     }
-    .hero-right img {
+    .hero-card {
+      background: var(--navy);
+      border-radius: 28px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(11,31,140,0.2);
       width: 100%;
-      max-width: 380px;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 24px 48px rgba(11,31,140,0.12));
-      border-radius: 20px;
+      max-width: 320px;
     }
+    .hero-card-pill {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      background: rgba(75,188,255,0.18);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1.25rem;
+    }
+    .hero-card-number {
+      font-family: 'Lilita One', cursive;
+      font-size: 6.5rem;
+      color: var(--white);
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .hero-card-sub {
+      font-family: 'Lilita One', cursive;
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.02em;
+      margin-bottom: 2rem;
+    }
+    .hero-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .hero-card-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.6rem 1rem;
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      text-align: left;
+    }
+    .hero-card-item .ci { font-size: 1.1rem; flex-shrink: 0; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -293,8 +339,10 @@
 
     @media (max-width: 860px) {
       #hero { grid-template-columns: 1fr; padding-top: 90px; }
-      .hero-right { order: -1; max-width: 260px; margin: 0 auto; }
-      .hero-headline { font-size: clamp(3.5rem, 12vw, 5.5rem); }
+      .hero-right { order: -1; }
+      .hero-card { max-width: 280px; padding: 2rem 1.5rem; }
+      .hero-card-number { font-size: 5rem; }
+      .hero-headline { font-size: clamp(3.2rem, 11vw, 5.5rem); }
     }
 
     /* ── TICKER ── */
@@ -310,7 +358,7 @@
     }
     .ticker-item {
       white-space: nowrap;
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1rem;
       letter-spacing: 0.1em;
       color: rgba(255,255,255,0.9);
@@ -339,10 +387,10 @@
       margin-bottom: 0.75rem;
     }
     .section-title {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: clamp(2.4rem, 4.5vw, 3.5rem);
-      letter-spacing: 0.04em;
-      line-height: 0.95;
+      letter-spacing: -0.01em;
+      line-height: 1.0;
       color: var(--navy);
       margin-bottom: 0.9rem;
     }
@@ -363,7 +411,7 @@
       align-items: center;
     }
     .story-text h2 {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: clamp(2.5rem, 5vw, 4rem);
       letter-spacing: 0.04em;
       line-height: 0.95;
@@ -431,7 +479,7 @@
     }
     .machine-icon { font-size: 2.2rem; margin-bottom: 0.9rem; display: block; }
     .machine-name {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.4rem;
       letter-spacing: 0.04em;
       color: var(--navy);
@@ -466,7 +514,7 @@
     }
     .photo-text .eyebrow { color: rgba(255,255,255,0.45); }
     .photo-text h2 {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: clamp(2.5rem, 5vw, 4.2rem);
       letter-spacing: 0.04em;
       line-height: 0.95;
@@ -503,7 +551,7 @@
     .tab-btn {
       padding: 0.55rem 1.5rem;
       border-radius: 999px;
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1rem;
       letter-spacing: 0.05em;
       background: transparent;
@@ -543,7 +591,7 @@
     .product-name { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
     .product-size { font-size: 0.74rem; color: var(--muted); }
     .product-price {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.25rem;
       letter-spacing: 0.04em;
       color: var(--navy);
@@ -615,7 +663,7 @@
       border-radius: 50%;
       background: var(--navy);
       color: var(--white);
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.05rem;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
@@ -647,7 +695,7 @@
       border: none;
       cursor: pointer;
       text-align: left;
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.1rem;
       letter-spacing: 0.04em;
       color: var(--navy);
@@ -696,7 +744,7 @@
     .ig-inner { position: relative; z-index: 1; }
     .ig-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.6rem; display: block; }
     .ig-headline {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: clamp(2.5rem, 5.5vw, 4.5rem);
       letter-spacing: 0.04em;
       line-height: 0.95;
@@ -704,7 +752,7 @@
       margin-bottom: 0.4rem;
     }
     .ig-handle {
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: clamp(3rem, 6.5vw, 5.5rem);
       letter-spacing: 0.04em;
       line-height: 0.95;
@@ -719,7 +767,7 @@
       padding: 0.85rem 1.75rem;
       background: var(--blue);
       color: var(--navy);
-      font-family: 'Bangers', sans-serif;
+      font-family: 'Lilita One', cursive;
       font-size: 1.1rem;
       letter-spacing: 0.05em;
       text-decoration: none;
@@ -745,7 +793,7 @@
       justify-content: space-between;
       gap: 1.5rem;
     }
-    .footer-logo { font-family: 'Bangers', sans-serif; font-size: 1.7rem; letter-spacing: 0.06em; color: var(--white); text-decoration: none; }
+    .footer-logo { font-family: 'Lilita One', cursive; font-size: 1.7rem; letter-spacing: 0.06em; color: var(--white); text-decoration: none; }
     .footer-logo .dot { color: var(--red); }
     .footer-tagline { font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
     .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
@@ -815,7 +863,16 @@
     </div>
   </div>
   <div class="hero-right">
-    <img src="img/design-inspo.jpeg" alt="VB Shop" width="380" height="540"/>
+    <div class="hero-card">
+      <span class="hero-card-pill">Immer offen</span>
+      <div class="hero-card-number">24/7</div>
+      <div class="hero-card-sub">Kein Ruhetag.</div>
+      <div class="hero-card-list">
+        <div class="hero-card-item"><span class="ci">📍</span> Hinterstadt 18/1, Vöcklabruck</div>
+        <div class="hero-card-item"><span class="ci">⭐</span> 4,5 Sterne auf Google Maps</div>
+        <div class="hero-card-item"><span class="ci">🎵</span> Musik-Automat · Lucky10 · Kran</div>
+      </div>
+    </div>
   </div>
 </section>
 
