@@ -4,9 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VB Shop — Vöcklabruck</title>
-  <meta name="description" content="VB Shop Vöcklabruck — 24/7 geöffnet. Getränke, Snacks, Kaffee, Musik, Snus, Vapes. Hinterstadt 18/1."/>
-  <meta property="og:title" content="VB Shop — Immer offen."/>
-  <meta property="og:description" content="Der Shop, der nie zu hat. 24/7. Hinterstadt 18/1, Vöcklabruck."/>
+  <meta name="description" content="VB Shop Vöcklabruck — 24/7 geöffnet. Getränke, Snacks, Kaffee, Musik. Hinterstadt 18/1."/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -14,13 +12,15 @@
 
   <style>
     :root {
-      --navy:    #0B1F8C;
-      --blue:    #3EB5FF;
-      --red:     #E63030;
-      --white:   #FFFFFF;
-      --off:     #F4F6FF;
-      --ink:     #080C1A;
-      --muted:   #6B7280;
+      --navy:   #0B1F8C;
+      --blue:   #4BBCFF;
+      --red:    #E5322D;
+      --bg:     #F7F8FF;
+      --white:  #FFFFFF;
+      --ink:    #0D1020;
+      --muted:  #64697E;
+      --card:   #FFFFFF;
+      --border: rgba(11,31,140,0.08);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,46 +28,49 @@
 
     body {
       font-family: 'Space Grotesk', sans-serif;
-      background: var(--white);
+      background: var(--bg);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* ── REVEAL ── */
+    /* ── ANIMATIONS ── */
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .d1 { transition-delay: 0.08s; }
-    .d2 { transition-delay: 0.16s; }
-    .d3 { transition-delay: 0.24s; }
-    .d4 { transition-delay: 0.32s; }
-    .d5 { transition-delay: 0.40s; }
-    .d6 { transition-delay: 0.48s; }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+    .d5 { transition-delay: 0.5s; }
+    .d6 { transition-delay: 0.6s; }
 
     /* ── HEADER ── */
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 200;
-      background: var(--white);
-      border-bottom: 2px solid var(--navy);
+      padding: 0.75rem 2rem;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    header.scrolled {
+      background: rgba(247,248,255,0.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 20px rgba(11,31,140,0.07);
     }
     .header-inner {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0 2rem;
-      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .logo {
       font-family: 'Bangers', sans-serif;
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       letter-spacing: 0.06em;
       color: var(--navy);
       text-decoration: none;
@@ -78,646 +81,593 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1.75rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--navy);
+      font-size: 0.83rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--muted);
       text-decoration: none;
-      transition: color 0.15s;
+      transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--red); }
+    .nav-links a:hover { color: var(--navy); }
 
     .header-cta {
-      padding: 0.45rem 1.25rem;
+      padding: 0.55rem 1.35rem;
       background: var(--navy);
       color: var(--white);
       font-family: 'Bangers', sans-serif;
       font-size: 1rem;
       letter-spacing: 0.06em;
       text-decoration: none;
-      border: 2px solid var(--navy);
-      transition: background 0.15s, color 0.15s;
+      border-radius: 999px;
+      transition: background 0.2s, transform 0.2s;
     }
-    .header-cta:hover { background: var(--red); border-color: var(--red); }
+    .header-cta:hover { background: var(--red); transform: translateY(-1px); }
 
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-    }
+    @media (max-width: 640px) { .nav-links { display: none; } }
 
     /* ── HERO ── */
     #hero {
-      padding-top: 60px;
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 1fr 420px;
+      grid-template-columns: 1fr 400px;
       align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding-left: 2rem;
-      padding-right: 2rem;
       gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 2rem 4rem;
       position: relative;
     }
 
-    /* Splash blobs behind everything */
-    .splash {
-      position: absolute;
+    /* soft background blobs */
+    #hero::before {
+      content: '';
+      position: fixed;
+      top: -10%; left: -5%;
+      width: 50vw; height: 60vh;
+      background: radial-gradient(circle, rgba(75,188,255,0.18) 0%, transparent 70%);
       border-radius: 50%;
-      filter: blur(0px);
       pointer-events: none;
       z-index: 0;
-    }
-    .splash-1 {
-      width: 380px; height: 320px;
-      background: var(--blue);
-      opacity: 0.12;
-      top: 8%; right: 30%;
-      border-radius: 62% 38% 70% 30% / 40% 60% 40% 60%;
-    }
-    .splash-2 {
-      width: 220px; height: 200px;
-      background: var(--red);
-      opacity: 0.08;
-      bottom: 15%; left: 5%;
-      border-radius: 45% 55% 30% 70% / 60% 40% 60% 40%;
-    }
-    .splash-3 {
-      width: 160px; height: 160px;
-      background: var(--blue);
-      opacity: 0.15;
-      top: 20%; left: 42%;
-      border-radius: 70% 30% 55% 45% / 35% 65% 35% 65%;
     }
 
     .hero-left {
       position: relative;
       z-index: 1;
-      padding: 3rem 0;
     }
 
     .hero-tag {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.3rem 0.9rem;
-      background: var(--navy);
-      color: var(--white);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      padding: 0.4rem 1rem;
+      background: var(--white);
+      border-radius: 999px;
+      box-shadow: 0 2px 12px rgba(11,31,140,0.1);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.04em;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.1s forwards;
     }
     .tag-dot {
-      width: 6px; height: 6px;
+      width: 7px; height: 7px;
       border-radius: 50%;
-      background: var(--blue);
-      animation: blink 1.8s infinite;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+      animation: pulse 2s infinite;
     }
-    @keyframes blink {
-      0%,100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+      50%      { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
     }
 
     .hero-headline {
       font-family: 'Bangers', sans-serif;
-      font-size: clamp(4.5rem, 8vw, 7.5rem);
+      font-size: clamp(4.5rem, 8.5vw, 8rem);
       letter-spacing: 0.04em;
-      line-height: 0.92;
+      line-height: 0.9;
       color: var(--navy);
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.1s forwards;
+      animation: fadeUp 0.6s ease 0.2s forwards;
     }
     .hero-headline .red { color: var(--red); }
-    .hero-headline .blue { color: var(--blue); }
 
     .hero-sub {
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-size: 1.08rem;
       color: var(--muted);
-      max-width: 460px;
-      line-height: 1.65;
-      margin-bottom: 2.5rem;
-      letter-spacing: -0.2px;
+      max-width: 420px;
+      line-height: 1.7;
+      margin-bottom: 2.25rem;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.25s forwards;
+      animation: fadeUp 0.6s ease 0.35s forwards;
     }
-    .hero-sub strong { color: var(--ink); }
+    .hero-sub strong { color: var(--ink); font-weight: 700; }
 
     .hero-ctas {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.4s forwards;
+      animation: fadeUp 0.6s ease 0.5s forwards;
     }
 
-    .btn-navy {
+    .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.85rem 2rem;
+      padding: 0.85rem 1.75rem;
       background: var(--navy);
       color: var(--white);
       font-family: 'Bangers', sans-serif;
-      font-size: 1.15rem;
-      letter-spacing: 0.06em;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
       text-decoration: none;
-      border: 2px solid var(--navy);
-      transition: background 0.15s, color 0.15s, transform 0.15s;
+      border-radius: 999px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(11,31,140,0.25);
     }
-    .btn-navy:hover { background: var(--red); border-color: var(--red); transform: translateY(-2px); }
-    .btn-navy:active { transform: scale(0.97); }
+    .btn-primary:hover {
+      background: var(--red);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(229,50,45,0.35);
+    }
+    .btn-primary:active { transform: scale(0.97); }
 
-    .btn-outline {
+    .btn-ghost {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.85rem 2rem;
-      background: transparent;
+      padding: 0.85rem 1.75rem;
+      background: var(--white);
       color: var(--navy);
       font-family: 'Bangers', sans-serif;
-      font-size: 1.15rem;
-      letter-spacing: 0.06em;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
       text-decoration: none;
-      border: 2px solid var(--navy);
-      transition: background 0.15s, color 0.15s, transform 0.15s;
+      border-radius: 999px;
+      border: none;
+      box-shadow: 0 2px 12px rgba(11,31,140,0.1);
+      transition: background 0.2s, transform 0.2s;
     }
-    .btn-outline:hover { background: var(--navy); color: var(--white); transform: translateY(-2px); }
+    .btn-ghost:hover { background: var(--bg); transform: translateY(-2px); }
 
     .hero-trust {
       display: flex;
       align-items: center;
-      gap: 2rem;
-      padding-top: 2rem;
-      border-top: 2px solid rgba(11,31,140,0.1);
+      gap: 1.75rem;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.55s forwards;
+      animation: fadeUp 0.6s ease 0.65s forwards;
     }
-    .trust-item { display: flex; flex-direction: column; gap: 0.1rem; }
+    .trust-item { display: flex; flex-direction: column; }
     .trust-num {
       font-family: 'Bangers', sans-serif;
-      font-size: 2rem;
+      font-size: 1.9rem;
       letter-spacing: 0.04em;
       color: var(--navy);
       line-height: 1;
     }
     .trust-label {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       color: var(--muted);
     }
-    .trust-sep { width: 1px; height: 40px; background: rgba(11,31,140,0.15); }
+    .trust-sep { width: 1px; height: 36px; background: var(--border); }
 
-    /* Hero right — mascot */
+    /* Hero mascot */
     .hero-right {
       position: relative;
       z-index: 1;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       opacity: 0;
       animation: fadeIn 0.8s ease 0.3s forwards;
     }
     .hero-right img {
       width: 100%;
-      max-width: 420px;
+      max-width: 380px;
       height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 20px 60px rgba(11,31,140,0.15));
+      filter: drop-shadow(0 24px 48px rgba(11,31,140,0.12));
+      border-radius: 20px;
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeIn {
       from { opacity: 0; }
-      to { opacity: 1; }
+      to   { opacity: 1; }
     }
 
-    @media (max-width: 900px) {
-      #hero {
-        grid-template-columns: 1fr;
-        padding-top: 80px;
-        gap: 0;
-      }
-      .hero-right {
-        order: -1;
-        margin: 0 auto;
-        max-width: 280px;
-      }
+    @media (max-width: 860px) {
+      #hero { grid-template-columns: 1fr; padding-top: 90px; }
+      .hero-right { order: -1; max-width: 260px; margin: 0 auto; }
+      .hero-headline { font-size: clamp(3.5rem, 12vw, 5.5rem); }
     }
 
     /* ── TICKER ── */
     #ticker {
       background: var(--navy);
-      padding: 0.75rem 0;
+      padding: 0.7rem 0;
       overflow: hidden;
     }
     .ticker-track {
       display: flex;
       width: max-content;
-      animation: ticker 24s linear infinite;
+      animation: scrollLeft 28s linear infinite;
     }
     .ticker-item {
       white-space: nowrap;
       font-family: 'Bangers', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       letter-spacing: 0.1em;
-      color: var(--white);
+      color: rgba(255,255,255,0.9);
       padding: 0 1.5rem;
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 1.25rem;
     }
-    .ticker-item .sep { color: var(--blue); }
-    @keyframes ticker {
+    .ticker-item .sep { color: var(--blue); font-size: 0.5rem; }
+    @keyframes scrollLeft {
       from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+      to   { transform: translateX(-50%); }
     }
 
-    /* ── SHARED SECTION ── */
-    .section {
-      padding: 6rem 2rem;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-eyebrow {
+    /* ── SECTION BASE ── */
+    .section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .eyebrow {
       display: inline-block;
-      padding: 0.2rem 0.8rem;
-      background: var(--navy);
-      color: var(--white);
       font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
     }
-    .section-headline {
+    .section-title {
+      font-family: 'Bangers', sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--navy);
+      margin-bottom: 0.9rem;
+    }
+    .section-body {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+    .section-header { margin-bottom: 3rem; }
+
+    /* ── STORY ── */
+    #story { background: var(--white); }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .story-text h2 {
       font-family: 'Bangers', sans-serif;
       font-size: clamp(2.5rem, 5vw, 4rem);
       letter-spacing: 0.04em;
       line-height: 0.95;
       color: var(--navy);
-      margin-bottom: 1rem;
-    }
-    .section-sub {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 520px;
-      line-height: 1.65;
-    }
-    .section-header { margin-bottom: 3.5rem; }
-
-    /* ── ABOUT (Story) ── */
-    #about {
-      background: var(--off);
-      border-top: 2px solid var(--navy);
-      border-bottom: 2px solid var(--navy);
-    }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-    .about-text h2 {
-      font-family: 'Bangers', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4.2rem);
-      letter-spacing: 0.04em;
-      line-height: 0.95;
-      color: var(--navy);
       margin-bottom: 1.5rem;
     }
-    .about-text h2 .red { color: var(--red); }
-    .about-text p {
+    .story-text h2 .red { color: var(--red); }
+    .story-text p {
       font-size: 1rem;
       color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1rem;
+      line-height: 1.75;
+      margin-bottom: 0.9rem;
     }
-    .about-text p strong { color: var(--ink); font-weight: 700; }
-    .about-text p:last-child { margin-bottom: 0; }
+    .story-text p strong { color: var(--ink); font-weight: 700; }
 
-    /* Single focus image */
-    .about-img {
+    .story-img-wrap {
       position: relative;
     }
-    .about-img img {
+    .story-img-wrap img {
       width: 100%;
-      aspect-ratio: 4/5;
+      aspect-ratio: 3/4;
       object-fit: cover;
+      border-radius: 24px;
       display: block;
-      border: 3px solid var(--navy);
+      box-shadow: 0 24px 60px rgba(11,31,140,0.14);
     }
-    .about-img-caption {
+    /* floating caption pill */
+    .story-img-caption {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 1rem 1.25rem;
-      background: var(--navy);
-      color: var(--white);
-      font-family: 'Bangers', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.06em;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(11,31,140,0.12);
     }
 
     @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .story-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
 
     /* ── MACHINES ── */
-    #machines { background: var(--white); }
+    #machines { background: var(--bg); }
     .machines-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5px;
-      border: 2px solid var(--navy);
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
     }
     .machine-card {
-      padding: 1.75rem;
-      border: 1px solid rgba(11,31,140,0.12);
       background: var(--white);
-      transition: background 0.2s ease;
-      position: relative;
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: 0 2px 16px rgba(11,31,140,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .machine-card:hover { background: var(--off); }
-    .machine-icon { font-size: 2.2rem; margin-bottom: 0.75rem; display: block; }
+    .machine-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(11,31,140,0.12);
+    }
+    .machine-icon { font-size: 2.2rem; margin-bottom: 0.9rem; display: block; }
     .machine-name {
       font-family: 'Bangers', sans-serif;
       font-size: 1.4rem;
       letter-spacing: 0.04em;
       color: var(--navy);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.4rem;
     }
-    .machine-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.55; }
-    .machine-badge {
+    .machine-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .machine-tag {
       display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.18rem 0.6rem;
-      background: var(--red);
-      color: var(--white);
-      font-size: 0.68rem;
+      margin-top: 0.9rem;
+      padding: 0.22rem 0.7rem;
+      background: rgba(229,50,45,0.1);
+      color: var(--red);
+      border-radius: 999px;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    /* ── CAROUSEL ── */
-    #gallery {
+    /* ── PHOTO MOMENT — single focused image ── */
+    #photo {
       background: var(--navy);
-      padding: 4rem 0;
-      overflow: hidden;
+      padding: 5rem 2rem;
     }
-    .gallery-header {
-      max-width: 1200px;
-      margin: 0 auto 2.5rem;
-      padding: 0 2rem;
+    .photo-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
     }
-    .gallery-header .section-headline { color: var(--white); }
-    .gallery-header .section-eyebrow { background: var(--red); }
+    .photo-text .eyebrow { color: rgba(255,255,255,0.45); }
+    .photo-text h2 {
+      font-family: 'Bangers', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+    .photo-text h2 .blue { color: var(--blue); }
+    .photo-text p { font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
 
-    .carousel-outer {
-      position: relative;
-      overflow: hidden;
-    }
-    .carousel-track {
-      display: flex;
-      gap: 1rem;
-      padding: 0 2rem;
-      transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
-    }
-    .carousel-slide {
-      flex-shrink: 0;
-      width: 420px;
-    }
-    .carousel-slide img {
+    .photo-img img {
       width: 100%;
       aspect-ratio: 4/3;
       object-fit: cover;
+      border-radius: 20px;
       display: block;
-      border: 3px solid rgba(255,255,255,0.15);
-      transition: border-color 0.2s;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.3);
     }
-    .carousel-slide.active img { border-color: var(--blue); }
 
-    .carousel-controls {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.5rem 2rem 0;
-    }
-    .carousel-btn {
-      width: 44px; height: 44px;
-      border: 2px solid rgba(255,255,255,0.3);
-      background: transparent;
-      color: var(--white);
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s, border-color 0.15s;
-      font-family: 'Bangers', sans-serif;
-      letter-spacing: 0;
-    }
-    .carousel-btn:hover { background: var(--blue); border-color: var(--blue); }
-    .carousel-dots {
-      display: flex;
-      gap: 0.4rem;
-    }
-    .carousel-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .carousel-dot.active { background: var(--blue); }
-
-    @media (max-width: 640px) {
-      .carousel-slide { width: 85vw; }
+    @media (max-width: 768px) {
+      .photo-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     }
 
     /* ── PRODUCTS ── */
-    #products { background: var(--off); border-top: 2px solid var(--navy); border-bottom: 2px solid var(--navy); }
+    #products { background: var(--white); }
     .tabs {
       display: flex;
-      gap: 0;
-      margin-bottom: 2.5rem;
-      border: 2px solid var(--navy);
+      gap: 0.4rem;
+      margin-bottom: 2.25rem;
+      background: var(--bg);
+      padding: 0.35rem;
+      border-radius: 999px;
       width: fit-content;
     }
     .tab-btn {
-      padding: 0.6rem 1.8rem;
+      padding: 0.55rem 1.5rem;
+      border-radius: 999px;
       font-family: 'Bangers', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.06em;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
       background: transparent;
-      color: var(--navy);
+      color: var(--muted);
       border: none;
       cursor: pointer;
-      transition: background 0.15s, color 0.15s;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     }
-    .tab-btn.active { background: var(--navy); color: var(--white); }
-    .tab-btn:hover:not(.active) { background: var(--off); }
+    .tab-btn.active {
+      background: var(--white);
+      color: var(--navy);
+      box-shadow: 0 2px 10px rgba(11,31,140,0.1);
+    }
+    .tab-btn:hover:not(.active) { color: var(--navy); }
 
     .tab-content { display: none; }
-    .tab-content.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1px; background: var(--navy); border: 2px solid var(--navy); }
+    .tab-content.active {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 0.75rem;
+    }
 
     .product-card {
-      background: var(--white);
+      background: var(--bg);
+      border-radius: 16px;
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      transition: background 0.15s;
+      gap: 0.3rem;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .product-card:hover { background: var(--off); }
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(11,31,140,0.08);
+    }
     .product-emoji { font-size: 1.8rem; }
-    .product-name { font-size: 0.92rem; font-weight: 700; color: var(--ink); }
-    .product-size { font-size: 0.75rem; color: var(--muted); }
+    .product-name { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+    .product-size { font-size: 0.74rem; color: var(--muted); }
     .product-price {
       font-family: 'Bangers', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       letter-spacing: 0.04em;
       color: var(--navy);
       margin-top: auto;
     }
     .products-note {
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
       font-size: 0.82rem;
       color: var(--muted);
-      padding: 0.75rem 1rem;
-      border: 1px solid rgba(11,31,140,0.15);
-      background: var(--white);
+      text-align: center;
     }
 
     /* ── MAP ── */
-    #map { background: var(--white); }
+    #map { background: var(--bg); }
     .map-grid {
       display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 3.5rem;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
       align-items: start;
     }
-    .map-info-row {
+    .map-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 24px rgba(11,31,140,0.07);
+    }
+    .map-row {
       display: flex;
       align-items: flex-start;
       gap: 0.9rem;
-      padding: 1.1rem 0;
-      border-bottom: 1px solid rgba(11,31,140,0.1);
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
     }
-    .map-info-row:first-child { border-top: 1px solid rgba(11,31,140,0.1); }
-    .map-icon { font-size: 1.2rem; flex-shrink: 0; padding-top: 0.1rem; }
-    .map-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
-    .map-value { font-size: 0.98rem; font-weight: 600; color: var(--ink); }
-    .map-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+    .map-row:first-child { padding-top: 0; }
+    .map-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .map-icon { font-size: 1.1rem; flex-shrink: 0; padding-top: 0.05rem; }
+    .map-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.15rem; }
+    .map-value { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+    .map-ctas { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
 
-    .map-embed iframe {
-      width: 100%;
-      height: 380px;
-      border: 3px solid var(--navy);
-      display: block;
-    }
+    .map-embed { border-radius: 20px; overflow: hidden; box-shadow: 0 4px 24px rgba(11,31,140,0.1); }
+    .map-embed iframe { display: block; width: 100%; height: 380px; border: none; }
+
     @media (max-width: 768px) {
       .map-grid { grid-template-columns: 1fr; }
-      .map-ctas { flex-direction: column; }
+      .map-embed iframe { height: 260px; }
     }
 
     /* ── REVIEWS ── */
-    #reviews { background: var(--off); border-top: 2px solid var(--navy); border-bottom: 2px solid var(--navy); }
+    #reviews { background: var(--white); }
     .reviews-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5px;
-      background: var(--navy);
-      border: 2px solid var(--navy);
-      margin-bottom: 2.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.25rem;
     }
     .review-card {
-      background: var(--white);
+      background: var(--bg);
+      border-radius: 20px;
       padding: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .review-stars { color: #F59E0B; font-size: 1rem; margin-bottom: 0.75rem; letter-spacing: 2px; }
-    .review-text { font-size: 0.92rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; }
+    .review-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,31,140,0.08); }
+    .review-stars { color: #F59E0B; font-size: 0.95rem; margin-bottom: 0.75rem; letter-spacing: 2px; }
+    .review-text { font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
     .review-author { display: flex; align-items: center; gap: 0.6rem; }
     .review-avatar {
       width: 36px; height: 36px;
+      border-radius: 50%;
       background: var(--navy);
       color: var(--white);
       font-family: 'Bangers', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 1.05rem;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
     .review-name { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
-    .review-loc { font-size: 0.75rem; color: var(--muted); }
+    .review-loc { font-size: 0.74rem; color: var(--muted); }
     .reviews-cta { text-align: center; }
     .reviews-note { font-size: 0.82rem; color: var(--muted); margin-top: 0.6rem; }
 
     /* ── FAQ ── */
-    #faq { background: var(--white); }
-    .faq-wrap { max-width: 680px; margin: 0 auto; }
-    .faq-item {
-      border-top: 2px solid rgba(11,31,140,0.1);
+    #faq { background: var(--bg); }
+    .faq-wrap { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.5rem; }
+    .faq-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(11,31,140,0.05);
+      transition: box-shadow 0.2s;
     }
-    .faq-item:last-child { border-bottom: 2px solid rgba(11,31,140,0.1); }
+    .faq-card.open { box-shadow: 0 4px 20px rgba(11,31,140,0.1); }
     .faq-q {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1.2rem 0;
-      font-family: 'Bangers', sans-serif;
-      font-size: 1.15rem;
-      letter-spacing: 0.04em;
-      color: var(--navy);
+      padding: 1.1rem 1.4rem;
       background: none;
       border: none;
       cursor: pointer;
       text-align: left;
-      transition: color 0.15s;
+      font-family: 'Bangers', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      transition: color 0.2s;
     }
     .faq-q:hover { color: var(--red); }
     .faq-icon {
       flex-shrink: 0;
-      width: 24px; height: 24px;
-      background: var(--navy);
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-family: 'Bangers', sans-serif;
-      transition: transform 0.3s ease, background 0.15s;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--bg);
+      color: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: transform 0.3s ease, background 0.2s;
     }
-    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--red); }
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease;
-    }
-    .faq-a-inner {
-      padding: 0 0 1.2rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
+    .faq-card.open .faq-icon { transform: rotate(45deg); background: var(--red); color: var(--white); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-a-inner { padding: 0 1.4rem 1.1rem; font-size: 0.93rem; color: var(--muted); line-height: 1.7; }
 
     /* ── INSTAGRAM ── */
     #instagram {
@@ -727,128 +677,125 @@
       position: relative;
       overflow: hidden;
     }
-    /* Splash shapes on dark */
-    #instagram::before {
+    #instagram::before, #instagram::after {
       content: '';
       position: absolute;
-      width: 500px; height: 400px;
-      background: var(--blue);
-      opacity: 0.08;
-      border-radius: 60% 40% 70% 30% / 45% 55% 45% 55%;
-      top: -10%; left: -5%;
+      border-radius: 50%;
       pointer-events: none;
+    }
+    #instagram::before {
+      width: 600px; height: 500px;
+      background: radial-gradient(circle, rgba(75,188,255,0.12) 0%, transparent 70%);
+      top: -20%; left: -10%;
     }
     #instagram::after {
-      content: '';
-      position: absolute;
-      width: 350px; height: 300px;
-      background: var(--red);
-      opacity: 0.08;
-      border-radius: 40% 60% 35% 65% / 55% 45% 55% 45%;
-      bottom: -10%; right: -5%;
-      pointer-events: none;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(229,50,45,0.1) 0%, transparent 70%);
+      bottom: -15%; right: -8%;
     }
     .ig-inner { position: relative; z-index: 1; }
-    .ig-eyebrow { display: inline-block; padding: 0.2rem 0.8rem; background: var(--red); color: var(--white); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
-    .ig-headline { font-family: 'Bangers', sans-serif; font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: 0.04em; line-height: 0.95; color: var(--white); margin-bottom: 0.5rem; }
+    .ig-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.6rem; display: block; }
+    .ig-headline {
+      font-family: 'Bangers', sans-serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
     .ig-handle {
       font-family: 'Bangers', sans-serif;
-      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-size: clamp(3rem, 6.5vw, 5.5rem);
       letter-spacing: 0.04em;
       line-height: 0.95;
       color: var(--blue);
       display: block;
       margin-bottom: 2rem;
     }
-    .ig-sub { font-size: 0.95rem; color: rgba(255,255,255,0.5); margin-top: 0.75rem; }
-
     .btn-blue {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.85rem 2rem;
+      padding: 0.85rem 1.75rem;
       background: var(--blue);
       color: var(--navy);
       font-family: 'Bangers', sans-serif;
-      font-size: 1.15rem;
-      letter-spacing: 0.06em;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
       text-decoration: none;
-      border: 2px solid var(--blue);
-      transition: background 0.15s, color 0.15s, transform 0.15s;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(75,188,255,0.3);
     }
-    .btn-blue:hover { background: var(--white); border-color: var(--white); transform: translateY(-2px); }
+    .btn-blue:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(75,188,255,0.25); }
+    .ig-sub { font-size: 0.88rem; color: rgba(255,255,255,0.4); margin-top: 0.75rem; }
 
     /* ── FOOTER ── */
     footer {
       background: var(--ink);
-      color: rgba(255,255,255,0.6);
       padding: 2.5rem 2rem;
-      border-top: 3px solid var(--navy);
     }
     .footer-inner {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
       align-items: center;
       justify-content: space-between;
+      gap: 1.5rem;
     }
-    .footer-logo { font-family: 'Bangers', sans-serif; font-size: 1.8rem; letter-spacing: 0.06em; color: var(--white); text-decoration: none; }
+    .footer-logo { font-family: 'Bangers', sans-serif; font-size: 1.7rem; letter-spacing: 0.06em; color: var(--white); text-decoration: none; }
     .footer-logo .dot { color: var(--red); }
-    .footer-tagline { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 0.15rem; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
-    .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+    .footer-tagline { font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--blue); }
-    .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+    .footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.2); }
 
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
     @media (max-width: 640px) {
       .section { padding: 4rem 1.25rem; }
-      .btn-navy, .btn-outline, .btn-blue { width: 100%; justify-content: center; }
       .hero-ctas { flex-direction: column; }
-      .tabs { width: 100%; }
-      .tab-btn { flex: 1; }
+      .btn-primary, .btn-ghost, .btn-blue { width: 100%; justify-content: center; }
       .footer-inner { flex-direction: column; text-align: center; }
+      .map-ctas { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════ HEADER ══════════════════ -->
-<header>
+<!-- ══ HEADER ══ -->
+<header id="mainHeader">
   <div class="header-inner">
     <a href="#hero" class="logo">VB<span class="dot">.</span></a>
     <ul class="nav-links">
       <li><a href="#machines">Automaten</a></li>
       <li><a href="#products">Produkte</a></li>
       <li><a href="#map">Route</a></li>
-      <li><a href="#faq">FAQ</a></li>
     </ul>
     <a href="#map" class="header-cta">Route planen →</a>
   </div>
 </header>
 
-<!-- ══════════════════ HERO ══════════════════ -->
+<!-- ══ HERO ══ -->
 <section id="hero">
-  <div class="splash splash-1"></div>
-  <div class="splash splash-2"></div>
-  <div class="splash splash-3"></div>
-
   <div class="hero-left">
-    <div class="hero-tag"><span class="tag-dot"></span> Jetzt offen — immer</div>
+    <div class="hero-tag">
+      <span class="tag-dot"></span>
+      Jetzt geöffnet — und morgen früh auch
+    </div>
     <h1 class="hero-headline">
-      VB<br/>
-      SHOP<span class="red">.</span>
+      VB<br/>SHOP<span class="red">.</span>
     </h1>
     <p class="hero-sub">
       Sonntag Abend. Alle Läden zu. <strong>Wir nicht.</strong><br/>
       Neben der Hauptschule in der Hinterstadt — 24/7, auch an Feiertagen.
     </p>
     <div class="hero-ctas">
-      <a href="#map" class="btn-navy">Route planen →</a>
-      <a href="#machines" class="btn-outline">Was gibts? ↓</a>
+      <a href="#map" class="btn-primary">Route planen →</a>
+      <a href="#machines" class="btn-ghost">Was gibts? ↓</a>
     </div>
     <div class="hero-trust">
       <div class="trust-item">
@@ -867,65 +814,65 @@
       </div>
     </div>
   </div>
-
   <div class="hero-right">
-    <img src="img/design-inspo.jpeg" alt="VB Shop Mascot" width="420" height="600"/>
+    <img src="img/design-inspo.jpeg" alt="VB Shop" width="380" height="540"/>
   </div>
 </section>
 
-<!-- ══════════════════ TICKER ══════════════════ -->
+<!-- ══ TICKER ══ -->
 <div id="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span class="ticker-item">VB SHOP <span class="sep">●</span></span>
-    <span class="ticker-item">IMMER OFFEN <span class="sep">●</span></span>
-    <span class="ticker-item">24/7 AUCH AN FEIERTAGEN <span class="sep">●</span></span>
-    <span class="ticker-item">NEUE DUBAI SCHOKOLADE? WIR HABEN SIE ALS ERSTES <span class="sep">●</span></span>
-    <span class="ticker-item">HINTERSTADT 18/1 VÖCKLABRUCK <span class="sep">●</span></span>
-    <span class="ticker-item">GETRÄNKE · SNACKS · KAFFEE · MUSIK · SNUS & VAPE <span class="sep">●</span></span>
-    <span class="ticker-item">BETRIEBEN VON VLOGGING HIAS & TEAM <span class="sep">●</span></span>
-    <!-- duplicate -->
-    <span class="ticker-item">VB SHOP <span class="sep">●</span></span>
-    <span class="ticker-item">IMMER OFFEN <span class="sep">●</span></span>
-    <span class="ticker-item">24/7 AUCH AN FEIERTAGEN <span class="sep">●</span></span>
-    <span class="ticker-item">NEUE DUBAI SCHOKOLADE? WIR HABEN SIE ALS ERSTES <span class="sep">●</span></span>
-    <span class="ticker-item">HINTERSTADT 18/1 VÖCKLABRUCK <span class="sep">●</span></span>
-    <span class="ticker-item">GETRÄNKE · SNACKS · KAFFEE · MUSIK · SNUS & VAPE <span class="sep">●</span></span>
-    <span class="ticker-item">BETRIEBEN VON VLOGGING HIAS & TEAM <span class="sep">●</span></span>
+    <span class="ticker-item">VB Shop <span class="sep">●</span></span>
+    <span class="ticker-item">Immer offen <span class="sep">●</span></span>
+    <span class="ticker-item">24/7 auch an Feiertagen <span class="sep">●</span></span>
+    <span class="ticker-item">Neue Dubai Schokolade? Wir haben sie als erstes <span class="sep">●</span></span>
+    <span class="ticker-item">Hinterstadt 18/1 Vöcklabruck <span class="sep">●</span></span>
+    <span class="ticker-item">Getränke · Snacks · Kaffee · Musik · Snus & Vape <span class="sep">●</span></span>
+    <span class="ticker-item">VB Shop <span class="sep">●</span></span>
+    <span class="ticker-item">Immer offen <span class="sep">●</span></span>
+    <span class="ticker-item">24/7 auch an Feiertagen <span class="sep">●</span></span>
+    <span class="ticker-item">Neue Dubai Schokolade? Wir haben sie als erstes <span class="sep">●</span></span>
+    <span class="ticker-item">Hinterstadt 18/1 Vöcklabruck <span class="sep">●</span></span>
+    <span class="ticker-item">Getränke · Snacks · Kaffee · Musik · Snus & Vape <span class="sep">●</span></span>
   </div>
 </div>
 
-<!-- ══════════════════ ABOUT / STORY ══════════════════ -->
-<section id="about" class="section">
+<!-- ══ STORY ══ -->
+<section id="story" class="section">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <span class="section-eyebrow">Die Story</span>
-        <h2>19:00 Uhr.<br/>Alle Läden zu.<br/><span class="red">VB Shop nicht.</span></h2>
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <span class="eyebrow">Die Story</span>
+        <h2>
+          19:00 Uhr.<br/>
+          Alle Läden zu.<br/>
+          <span class="red">VB Shop nicht.</span>
+        </h2>
         <p>Der VB Shop steht direkt in der Hinterstadt — neben der Hauptschule, mitten in Vöcklabruck. Hier gibt's was du brauchst, egal wann du's brauchst.</p>
         <p>Neue Dubai Schokolade kommt raus? <strong>Wir haben sie als erstes.</strong> Neue Red Bull Sorte? <strong>Wir sind dabei.</strong> Irgendein neuer Trend? <strong>Schon längst da.</strong></p>
-        <p>Betrieben von ein paar jungen Leuten aus der Gegend — unter anderem Vlogging Hias.</p>
+        <p>Betrieben von jungen Leuten aus der Gegend — unter anderem Vlogging Hias.</p>
       </div>
-      <div class="about-img reveal d2">
-        <img src="img/shop-neon.jpeg" alt="VB Shop Innenraum" width="600" height="750" loading="lazy"/>
-        <div class="about-img-caption">Hinterstadt 18/1 · 4840 Vöcklabruck</div>
+      <div class="story-img-wrap reveal d2">
+        <img src="img/shop-interior.jpeg" alt="VB Shop Innenraum" loading="lazy" width="600" height="800"/>
+        <span class="story-img-caption">📍 Hinterstadt 18/1 · Vöcklabruck</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ MACHINES ══════════════════ -->
-<section id="machines" class="section">
+<!-- ══ MACHINES ══ -->
+<section id="machines" class="section" style="background:var(--bg);">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-eyebrow">Was dich erwartet</span>
-      <h2 class="section-headline">11 Automaten.<br/>1 Adresse.</h2>
-      <p class="section-sub">Von Exotic Drinks bis Arcade — alles unter einem Dach, rund um die Uhr.</p>
+      <span class="eyebrow">Was dich erwartet</span>
+      <h2 class="section-title">11 Automaten. 1 Adresse.</h2>
+      <p class="section-body">Von Exotic Drinks bis Arcade — alles unter einem Dach, rund um die Uhr.</p>
     </div>
     <div class="machines-grid">
       <div class="machine-card reveal d1">
         <span class="machine-icon">🥤</span>
         <div class="machine-name">Getränke</div>
-        <div class="machine-desc">Exotic Drinks, Energy, Eistee, Aloe Vera & mehr. 2 Automaten.</div>
+        <div class="machine-desc">Exotic Drinks, Energy, Eistee, Aloe Vera & mehr. 2 Automaten, immer voll.</div>
       </div>
       <div class="machine-card reveal d2">
         <span class="machine-icon">🍬</span>
@@ -940,63 +887,52 @@
       <div class="machine-card reveal d4">
         <span class="machine-icon">🎵</span>
         <div class="machine-name">Musik-Automat</div>
-        <div class="machine-desc">Wirf Geld rein. Wähle deinen Song. Er läuft live über die Anlage.</div>
-        <span class="machine-badge">Einmalig in VB</span>
+        <div class="machine-desc">Wirf Geld rein, wähle deinen Song — läuft live über die Anlage.</div>
+        <span class="machine-tag">Einmalig in VB</span>
       </div>
       <div class="machine-card reveal d5">
         <span class="machine-icon">🎮</span>
         <div class="machine-name">Kranautomat</div>
-        <div class="machine-desc">Greifer-Spielautomat für alle, die Nerven haben.</div>
+        <div class="machine-desc">Greifer-Spielautomat. Für alle, die Nerven haben.</div>
       </div>
       <div class="machine-card reveal d6">
         <span class="machine-icon">🏆</span>
         <div class="machine-name">Lucky10</div>
         <div class="machine-desc">Pinker Neon-Glücksautomat. Echte Preise. Dein Glück wartet.</div>
-        <span class="machine-badge">Jetzt testen</span>
+        <span class="machine-tag">Jetzt testen</span>
       </div>
       <div class="machine-card reveal d1">
         <span class="machine-icon">🚬</span>
         <div class="machine-name">Snus & Vape</div>
-        <div class="machine-desc">Für Erwachsene ab 18 Jahren. Personalausweis bereithalten.</div>
-        <span class="machine-badge">18+</span>
+        <div class="machine-desc">Für Erwachsene ab 18 Jahren.</div>
+        <span class="machine-tag">18+</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ GALLERY CAROUSEL ══════════════════ -->
-<section id="gallery">
-  <div class="gallery-header reveal">
-    <span class="section-eyebrow">Shop Photos</span>
-    <h2 class="section-headline" style="color:var(--white);">So schaut's aus.</h2>
-  </div>
-  <div class="carousel-outer">
-    <div class="carousel-track" id="carouselTrack">
-      <div class="carousel-slide active"><img src="img/shop-interior.jpeg" alt="Shop Innenraum" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-neon.jpeg" alt="Neon Lights" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-machines.jpeg" alt="Automaten" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-lucky10.jpeg" alt="Lucky10" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-snacks.jpeg" alt="Snacks" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-drinks.jpeg" alt="Getränke" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-claw.jpeg" alt="Kranautomat" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-room2.jpeg" alt="Zweiter Raum" loading="lazy" width="420" height="315"/></div>
-      <div class="carousel-slide"><img src="img/shop-vibe.jpeg" alt="Vibe" loading="lazy" width="420" height="315"/></div>
+<!-- ══ PHOTO MOMENT ══ -->
+<section id="photo">
+  <div class="photo-inner">
+    <div class="photo-text reveal">
+      <span class="eyebrow">Schau selbst</span>
+      <h2>So schaut's<br/>aus <span class="blue">drinnen.</span></h2>
+      <p>Zwei Räume, jede Menge Automaten, Neon-Lichter — und immer ein Grund, vorbeizukommen.</p>
     </div>
-  </div>
-  <div class="carousel-controls">
-    <button class="carousel-btn" id="carouselPrev" aria-label="Zurück">←</button>
-    <button class="carousel-btn" id="carouselNext" aria-label="Weiter">→</button>
-    <div class="carousel-dots" id="carouselDots"></div>
+    <div class="photo-img reveal d2">
+      <img src="img/shop-neon.jpeg" alt="VB Shop von innen" loading="lazy" width="600" height="450"/>
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════ PRODUCTS ══════════════════ -->
+<!-- ══ PRODUCTS ══ -->
 <!-- PRODUKTE — hier Preise/Namen anpassen -->
 <section id="products" class="section">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-eyebrow">Unsere Hits</span>
-      <h2 class="section-headline">Was dich erwartet.</h2>
+      <span class="eyebrow">Unsere Hits</span>
+      <h2 class="section-title">Was dich erwartet.</h2>
+      <p class="section-body">Immer frisch befüllt. Sortiment kann variieren.</p>
     </div>
     <div class="reveal d1">
       <div class="tabs">
@@ -1004,111 +940,107 @@
         <button class="tab-btn" onclick="switchTab('snacks')">🍬 Snacks</button>
       </div>
     </div>
-
     <div class="tab-content active reveal d2" id="tab-drinks">
-      <div class="product-card"><span class="product-emoji">🍵</span><div class="product-name">Jana Eistee</div><div class="product-size">500ml</div><div class="product-price">3,20 €</div></div>
-      <div class="product-card"><span class="product-emoji">🐂</span><div class="product-name">Red Bull</div><div class="product-size">250ml</div><div class="product-price">3,20 €</div></div>
-      <div class="product-card"><span class="product-emoji">🍊</span><div class="product-name">Fanta Exotic</div><div class="product-size">330ml</div><div class="product-price">2,50 €</div></div>
-      <div class="product-card"><span class="product-emoji">🌿</span><div class="product-name">OKF Aloe Vera</div><div class="product-size">500ml</div><div class="product-price">3,00 €</div></div>
-      <div class="product-card"><span class="product-emoji">⚡</span><div class="product-name">Powerade</div><div class="product-size">500ml</div><div class="product-price">2,80 €</div></div>
-      <div class="product-card"><span class="product-emoji">💚</span><div class="product-name">Gönrgy Energy</div><div class="product-size">500ml</div><div class="product-price">2,80 €</div></div>
+      <div class="product-card"><span class="product-emoji">🍵</span><div class="product-name">Jana Eistee</div><div class="product-size">500 ml</div><div class="product-price">3,20 €</div></div>
+      <div class="product-card"><span class="product-emoji">🐂</span><div class="product-name">Red Bull</div><div class="product-size">250 ml</div><div class="product-price">3,20 €</div></div>
+      <div class="product-card"><span class="product-emoji">🍊</span><div class="product-name">Fanta Exotic</div><div class="product-size">330 ml</div><div class="product-price">2,50 €</div></div>
+      <div class="product-card"><span class="product-emoji">🌿</span><div class="product-name">OKF Aloe Vera</div><div class="product-size">500 ml</div><div class="product-price">3,00 €</div></div>
+      <div class="product-card"><span class="product-emoji">⚡</span><div class="product-name">Powerade</div><div class="product-size">500 ml</div><div class="product-price">2,80 €</div></div>
+      <div class="product-card"><span class="product-emoji">💚</span><div class="product-name">Gönrgy Energy</div><div class="product-size">500 ml</div><div class="product-price">2,80 €</div></div>
     </div>
-
     <div class="tab-content" id="tab-snacks">
-      <div class="product-card"><span class="product-emoji">🌶️</span><div class="product-name">Buldak Carbonara</div><div class="product-size">130g</div><div class="product-price">4,00 €</div></div>
+      <div class="product-card"><span class="product-emoji">🌶️</span><div class="product-name">Buldak Carbonara</div><div class="product-size">130 g</div><div class="product-price">4,00 €</div></div>
       <div class="product-card"><span class="product-emoji">🌀</span><div class="product-name">Takis Blue Heat</div><div class="product-size">Rolled Tortilla</div><div class="product-price">4,20 €</div></div>
       <div class="product-card"><span class="product-emoji">🐉</span><div class="product-name">Hitschies Drachenzungen</div><div class="product-size">Blau</div><div class="product-price">2,40 €</div></div>
       <div class="product-card"><span class="product-emoji">✨</span><div class="product-name">Hitschies Brizzl Bälle</div><div class="product-size">Prickelnd</div><div class="product-price">3,80 €</div></div>
-      <div class="product-card"><span class="product-emoji">🌮</span><div class="product-name">PIPAPO Taco</div><div class="product-size">100g</div><div class="product-price">2,40 €</div></div>
+      <div class="product-card"><span class="product-emoji">🌮</span><div class="product-name">PIPAPO Taco</div><div class="product-size">100 g</div><div class="product-price">2,40 €</div></div>
       <div class="product-card"><span class="product-emoji">🍫</span><div class="product-name">Dubai Schokolade</div><div class="product-size">Pistazie & Kadaif</div><div class="product-price">2,00 €</div></div>
       <div class="product-card"><span class="product-emoji">🐻</span><div class="product-name">Haribo</div><div class="product-size">Goldbären</div><div class="product-price">1,40 €</div></div>
       <div class="product-card"><span class="product-emoji">🍫</span><div class="product-name">Kinder Bueno</div><div class="product-size">Classic</div><div class="product-price">1,80 €</div></div>
     </div>
-
-    <div class="products-note reveal d3">Sortiment kann variieren. Immer frisch befüllt. Alle Preise inkl. MwSt.</div>
+    <p class="products-note reveal d3">Sortiment kann variieren · Immer frisch befüllt · Alle Preise inkl. MwSt.</p>
   </div>
 </section>
 
-<!-- ══════════════════ MAP ══════════════════ -->
-<section id="map" class="section">
+<!-- ══ MAP ══ -->
+<section id="map" class="section" style="background:var(--bg);">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-eyebrow">Find uns</span>
-      <h2 class="section-headline">Route planen.</h2>
-      <p class="section-sub">Mitten in Vöcklabruck. Neben der Hauptschule. Parkplätze direkt vor dem Eingang.</p>
+      <span class="eyebrow">Find uns</span>
+      <h2 class="section-title">Route planen.</h2>
+      <p class="section-body">Mitten in Vöcklabruck. Parkplätze direkt vor dem Eingang.</p>
     </div>
     <div class="map-grid">
-      <div class="reveal d1">
-        <div class="map-info-row"><span class="map-icon">📍</span><div><div class="map-label">Adresse</div><div class="map-value">Hinterstadt 18/1, 4840 Vöcklabruck</div></div></div>
-        <div class="map-info-row"><span class="map-icon">🕐</span><div><div class="map-label">Öffnungszeiten</div><div class="map-value">24/7 — auch an Feiertagen</div></div></div>
-        <div class="map-info-row"><span class="map-icon">🅿️</span><div><div class="map-label">Parken</div><div class="map-value">Kostenlos direkt vor dem Eingang</div></div></div>
-        <div class="map-info-row"><span class="map-icon">💳</span><div><div class="map-label">Zahlung</div><div class="map-value">Karte & kontaktloses Zahlen</div></div></div>
+      <div class="map-card reveal d1">
+        <div class="map-row"><span class="map-icon">📍</span><div><div class="map-label">Adresse</div><div class="map-value">Hinterstadt 18/1, 4840 Vöcklabruck</div></div></div>
+        <div class="map-row"><span class="map-icon">🕐</span><div><div class="map-label">Öffnungszeiten</div><div class="map-value">24/7 — auch an Feiertagen</div></div></div>
+        <div class="map-row"><span class="map-icon">🅿️</span><div><div class="map-label">Parken</div><div class="map-value">Kostenlos direkt vor dem Eingang</div></div></div>
+        <div class="map-row"><span class="map-icon">💳</span><div><div class="map-label">Zahlung</div><div class="map-value">Karte & kontaktloses Zahlen überall</div></div></div>
         <div class="map-ctas">
-          <a href="https://share.google/JAvpiDVGGDyXSvECW" target="_blank" rel="noopener" class="btn-navy">Google Maps →</a>
-          <a href="https://maps.apple.com/?q=Hinterstadt+18+1,+4840+V%C3%B6cklabruck" target="_blank" rel="noopener" class="btn-outline">Apple Maps →</a>
+          <a href="https://share.google/JAvpiDVGGDyXSvECW" target="_blank" rel="noopener" class="btn-primary">Google Maps →</a>
+          <a href="https://maps.apple.com/?q=Hinterstadt+18+1,+4840+V%C3%B6cklabruck" target="_blank" rel="noopener" class="btn-ghost">Apple Maps →</a>
         </div>
       </div>
       <div class="map-embed reveal d2">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2672.3!2d13.6553688!3d48.0076698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4776d55555555555%3A0x1234567890abcdef!2sHinterstadt+18%2F1%2C+4840+V%C3%B6cklabruck!5e0!3m2!1sde!2sat!4v1683456000000!5m2!1sde!2sat" title="VB Shop auf Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2672.3!2d13.6553688!3d48.0076698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4776d55555555555%3A0x1234567890abcdef!2sHinterstadt+18%2F1%2C+4840+V%C3%B6cklabruck!5e0!3m2!1sde!2sat!4v1683456000000!5m2!1sde!2sat" title="VB Shop Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ REVIEWS ══════════════════ -->
+<!-- ══ REVIEWS ══ -->
 <section id="reviews" class="section">
   <div class="container">
     <div class="section-header reveal" style="text-align:center;">
-      <span class="section-eyebrow">Was andere sagen</span>
-      <h2 class="section-headline">4,5 Sterne auf Google.</h2>
+      <span class="eyebrow">Was andere sagen</span>
+      <h2 class="section-title">4,5 Sterne auf Google.</h2>
     </div>
     <div class="reviews-grid">
       <div class="review-card reveal d1">
         <div class="review-stars">★★★★★</div>
-        <p class="review-text">"Endlich ein Laden, der auch um 2 Uhr nachts offen hat. Die Snacks sind mega und der Musikautomat ist einfach eine eigene Klasse."</p>
+        <p class="review-text">"Endlich ein Laden der auch um 2 Uhr nachts offen hat. Die Snacks sind mega und der Musikautomat ist einfach eine eigene Klasse."</p>
         <div class="review-author"><div class="review-avatar">L</div><div><div class="review-name">Lukas M.</div><div class="review-loc">Vöcklabruck</div></div></div>
       </div>
       <div class="review-card reveal d2">
         <div class="review-stars">★★★★★</div>
-        <p class="review-text">"Buldak Nudeln und Takis gibt's sonst nirgends so leicht zu kaufen. Und rund um die Uhr — besser geht's nicht."</p>
+        <p class="review-text">"Buldak und Takis gibt's sonst nirgends so leicht. Rund um die Uhr — besser geht's nicht."</p>
         <div class="review-author"><div class="review-avatar">S</div><div><div class="review-name">Sarah K.</div><div class="review-loc">Attnang-Puchheim</div></div></div>
       </div>
       <div class="review-card reveal d3">
         <div class="review-stars">★★★★★</div>
-        <p class="review-text">"Krasse Vibes, coole Auswahl und wirklich 24/7. Der Kranautomat hat uns eine Stunde beschäftigt."</p>
+        <p class="review-text">"Coole Vibes, gute Auswahl, wirklich 24/7. Der Kranautomat hat uns eine Stunde beschäftigt."</p>
         <div class="review-author"><div class="review-avatar">T</div><div><div class="review-name">Thomas R.</div><div class="review-loc">Vöcklabruck</div></div></div>
       </div>
     </div>
     <div class="reviews-cta reveal d2">
-      <a href="https://www.google.com/search?q=VB+24/7+Automaten+Shop+Rezensionen" target="_blank" rel="noopener" class="btn-navy">Bewerte uns auf Google ⭐</a>
+      <a href="https://www.google.com/search?q=VB+24/7+Automaten+Shop+Rezensionen" target="_blank" rel="noopener" class="btn-primary">Bewerte uns auf Google ⭐</a>
       <p class="reviews-note">Deine Meinung hilft uns und anderen Kunden.</p>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ FAQ ══════════════════ -->
-<section id="faq" class="section">
+<!-- ══ FAQ ══ -->
+<section id="faq" class="section" style="background:var(--bg);">
   <div class="container">
-    <div class="section-header reveal" style="text-align:center;max-width:560px;margin:0 auto 3.5rem;">
-      <span class="section-eyebrow">FAQ</span>
-      <h2 class="section-headline">Häufige Fragen.</h2>
+    <div class="section-header reveal" style="text-align:center;max-width:500px;margin:0 auto 3rem;">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="section-title">Häufige Fragen.</h2>
     </div>
     <div class="faq-wrap">
-      <div class="faq-item reveal d1"><button class="faq-q" onclick="toggleFaq(this)">Wann habt ihr geöffnet?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Immer. 24 Stunden, 7 Tage, 365 Tage — auch an Feiertagen, Heiligabend und Silvester. Kein Witz.</div></div></div>
-      <div class="faq-item reveal d2"><button class="faq-q" onclick="toggleFaq(this)">Kann ich mit Karte zahlen?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Ja! Alle Automaten akzeptieren Karte und kontaktloses Zahlen (NFC).</div></div></div>
-      <div class="faq-item reveal d3"><button class="faq-q" onclick="toggleFaq(this)">Was ist der Musik-Automat?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Du wirfst Geld rein, wählst deinen Song — und er läuft direkt über die Anlage im Shop.</div></div></div>
-      <div class="faq-item reveal d4"><button class="faq-q" onclick="toggleFaq(this)">Gibt es Automaten für Erwachsene?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Ja — Snus und Vape sind nur für Personen ab 18 Jahren. Personalausweis bereithalten.</div></div></div>
-      <div class="faq-item reveal d5"><button class="faq-q" onclick="toggleFaq(this)">Wie oft werden die Automaten befüllt?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Regelmäßig. Wenn etwas leer ist, einfach auf Instagram melden: @vbshop.247</div></div></div>
-      <div class="faq-item reveal d6"><button class="faq-q" onclick="toggleFaq(this)">Gibt es Parkplätze?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Ja, direkt vor dem Gebäude. Kostenlos, gut zugänglich.</div></div></div>
-      <div class="faq-item reveal d1"><button class="faq-q" onclick="toggleFaq(this)">Was ist Lucky10?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Ein pink-neon-leuchtender Glücksautomat mit echten Preisen drin. Wirf dein Glück rein.</div></div></div>
+      <div class="faq-card reveal d1"><button class="faq-q" onclick="toggleFaq(this)">Wann habt ihr geöffnet?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Immer. 24 Stunden, 7 Tage, 365 Tage — auch an Feiertagen, Heiligabend und Silvester.</div></div></div>
+      <div class="faq-card reveal d2"><button class="faq-q" onclick="toggleFaq(this)">Kann ich mit Karte zahlen?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Ja! Alle Automaten akzeptieren Karte und kontaktloses Zahlen (NFC).</div></div></div>
+      <div class="faq-card reveal d3"><button class="faq-q" onclick="toggleFaq(this)">Was ist der Musik-Automat?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Du wirfst Geld rein, wählst deinen Song — und er läuft direkt über die Anlage im Shop.</div></div></div>
+      <div class="faq-card reveal d4"><button class="faq-q" onclick="toggleFaq(this)">Gibt es Automaten für Erwachsene?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Ja — Snus und Vape sind nur für Personen ab 18 Jahren. Personalausweis bereithalten.</div></div></div>
+      <div class="faq-card reveal d5"><button class="faq-q" onclick="toggleFaq(this)">Wie oft werden die Automaten befüllt?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Regelmäßig. Etwas leer oder ein Wunsch? Auf Instagram melden: @vbshop.247</div></div></div>
+      <div class="faq-card reveal d6"><button class="faq-q" onclick="toggleFaq(this)">Gibt es Parkplätze?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Ja, kostenlos direkt vor dem Gebäude.</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ INSTAGRAM ══════════════════ -->
+<!-- ══ INSTAGRAM ══ -->
 <section id="instagram">
   <div class="ig-inner reveal">
-    <span class="ig-eyebrow">Instagram</span>
+    <span class="ig-label">Instagram</span>
     <h2 class="ig-headline">Folg uns.</h2>
     <span class="ig-handle">@vbshop.247</span>
     <a href="https://www.instagram.com/vbshop.247/" target="_blank" rel="noopener" class="btn-blue">Auf Instagram folgen →</a>
@@ -1116,26 +1048,24 @@
   </div>
 </section>
 
-<!-- ══════════════════ FOOTER ══════════════════ -->
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-inner">
     <div>
       <a href="#hero" class="footer-logo">VB<span class="dot">.</span></a>
-      <p class="footer-tagline">24/7 geöffnet — auch an Feiertagen</p>
-      <p class="footer-tagline">Hinterstadt 18/1, 4840 Vöcklabruck</p>
+      <p class="footer-tagline">24/7 geöffnet — auch an Feiertagen · Hinterstadt 18/1, 4840 Vöcklabruck</p>
     </div>
     <div class="footer-links">
       <a href="https://www.instagram.com/vbshop.247/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://share.google/JAvpiDVGGDyXSvECW" target="_blank" rel="noopener">Google Maps</a>
-      <a href="https://www.google.com/search?q=VB+24/7+Automaten+Shop+Rezensionen" target="_blank" rel="noopener">Bewertungen</a>
       <a href="#faq">FAQ</a>
     </div>
-    <p class="footer-copy">© 2026 VB Shop. Alle Rechte vorbehalten.</p>
+    <p class="footer-copy">© 2026 VB Shop</p>
   </div>
 </footer>
 
 <script>
-/* ── SCROLL REVEAL ── */
+/* scroll-reveal */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
@@ -1143,7 +1073,13 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-/* ── TABS ── */
+/* sticky header */
+const header = document.getElementById('mainHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* tabs */
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -1151,73 +1087,30 @@ function switchTab(name) {
   document.getElementById(`tab-${name}`).classList.add('active');
 }
 
-/* ── FAQ ── */
+/* faq */
 function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const ans = item.querySelector('.faq-a');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(el => {
-    el.classList.remove('open');
-    el.querySelector('.faq-a').style.maxHeight = null;
+  const card = btn.closest('.faq-card');
+  const ans = card.querySelector('.faq-a');
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.faq-card.open').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.faq-a').style.maxHeight = null;
   });
   if (!isOpen) {
-    item.classList.add('open');
+    card.classList.add('open');
     ans.style.maxHeight = ans.scrollHeight + 'px';
   }
 }
 
-/* ── CAROUSEL ── */
-const track = document.getElementById('carouselTrack');
-const slides = track ? Array.from(track.children) : [];
-const dotsContainer = document.getElementById('carouselDots');
-let current = 0;
-const slideWidth = () => slides[0] ? slides[0].offsetWidth + 16 : 436;
-
-function updateCarousel() {
-  track.style.transform = `translateX(-${current * slideWidth()}px)`;
-  slides.forEach((s, i) => s.classList.toggle('active', i === current));
-  document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-}
-
-if (slides.length) {
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', `Bild ${i + 1}`);
-    dot.onclick = () => { current = i; updateCarousel(); };
-    dotsContainer.appendChild(dot);
-  });
-
-  document.getElementById('carouselPrev').onclick = () => {
-    current = current > 0 ? current - 1 : slides.length - 1;
-    updateCarousel();
-  };
-  document.getElementById('carouselNext').onclick = () => {
-    current = current < slides.length - 1 ? current + 1 : 0;
-    updateCarousel();
-  };
-
-  // Touch swipe
-  let startX = 0;
-  track.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
-  track.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? document.getElementById('carouselNext').click() : document.getElementById('carouselPrev').click();
-    }
-  }, { passive: true });
-}
-
-/* ── SMOOTH SCROLL ── */
+/* smooth scroll */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));
     if (!t) return;
     e.preventDefault();
-    window.scrollTo({ top: t.offsetTop - 64, behavior: 'smooth' });
+    window.scrollTo({ top: t.offsetTop - 70, behavior: 'smooth' });
   });
 });
 </script>
-
 </body>
 </html>
