@@ -482,12 +482,10 @@
       gap: 1rem;
       width: max-content;
       padding: 0 1rem 2.5rem;
-      animation: carouselScroll 22s linear infinite;
+      will-change: transform;
+      cursor: grab;
     }
-    @media (max-width: 640px) {
-      .carousel-track { animation-duration: 13s; }
-    }
-    .carousel-track:hover { animation-play-state: paused; }
+    .carousel-track:active { cursor: grabbing; }
     .carousel-track img {
       height: 280px;
       width: auto;
@@ -495,10 +493,6 @@
       object-fit: cover;
       flex-shrink: 0;
       display: block;
-    }
-    @keyframes carouselScroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
     }
 
     /* ── PRODUCTS ── */
@@ -1202,6 +1196,79 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     window.scrollTo({ top: t.offsetTop - 70, behavior: 'smooth' });
   });
 });
+
+/* ── CAROUSEL (JS-driven: auto-scroll + touch/drag swipe) ── */
+(function () {
+  const track = document.querySelector('.carousel-track');
+  if (!track) return;
+
+  const isMobile = () => window.innerWidth < 640;
+  let pos = 0;
+  let paused = false;
+  let dragging = false;
+  let dragStartX = 0;
+  let dragStartPos = 0;
+
+  function halfWidth() {
+    return track.scrollWidth / 2;
+  }
+
+  function speed() {
+    return isMobile() ? 1.4 : 1.0; // px per frame
+  }
+
+  function clamp(p) {
+    const h = halfWidth();
+    if (h <= 0) return p;
+    p = p % h;
+    if (p < 0) p += h;
+    return p;
+  }
+
+  function tick() {
+    if (!paused && !dragging) {
+      pos = clamp(pos + speed());
+    }
+    track.style.transform = `translateX(-${pos}px)`;
+    requestAnimationFrame(tick);
+  }
+
+  /* hover pause on desktop */
+  track.addEventListener('mouseenter', () => { paused = true; });
+  track.addEventListener('mouseleave', () => { paused = false; });
+
+  /* mouse drag (desktop) */
+  track.addEventListener('mousedown', e => {
+    dragging = true;
+    dragStartX = e.clientX;
+    dragStartPos = pos;
+    track.style.cursor = 'grabbing';
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    pos = clamp(dragStartPos + (dragStartX - e.clientX));
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    track.style.cursor = 'grab';
+  });
+
+  /* touch swipe (mobile) */
+  track.addEventListener('touchstart', e => {
+    dragging = true;
+    dragStartX = e.touches[0].clientX;
+    dragStartPos = pos;
+  }, { passive: true });
+  track.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    pos = clamp(dragStartPos + (dragStartX - e.touches[0].clientX));
+    track.style.transform = `translateX(-${pos}px)`;
+  }, { passive: true });
+  track.addEventListener('touchend', () => { dragging = false; }, { passive: true });
+
+  requestAnimationFrame(tick);
+})();
 </script>
 </body>
 </html>
